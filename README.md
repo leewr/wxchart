@@ -83,4 +83,4 @@ k线图、直方图、曲线图、保持了和echart的类似的参数配置
 	}
 	### 效果预览
 	#### k线图
-	![k线图](https://github.com/leewr/wxchart/blob/master/image/kine.png)
+	![k线图](image/kine.png)
