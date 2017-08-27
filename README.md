@@ -81,3 +81,6 @@ k线图、直方图、曲线图、保持了和echart的类似的参数配置
             }
 		]
 	}
+	### 效果预览
+	#### k线图
+	![k线图](http://img.alicdn.com/imgextra/i3/690099515/TB2.Jb3X.gQMeJjy0FfXXbddXXa_!!690099515-2-daren.png)

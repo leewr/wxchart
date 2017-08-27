@@ -1,0 +1,112 @@
+<!--day.wxml-->
+<view class="markettime">
+    <!-- <view class="marketdhead">
+        <view class="num colordown">
+            <view class="num1">{{marketData[19].last}}</view>
+            <view class="tl">
+                <text class="num2">{{marketData[19].upDown}}</text>
+                <text class="num3">{{marketData[19].upDownRate}}</text>
+            </view>
+        </view>
+        <view class="infodata">
+            <view class="allnum">最高：
+                <text class="coloruview">{{marketData[19].high}}</text>
+            </view>
+            <view class="allnum">最低：
+                <text class="colordown">{{marketData[19].low}}</text>
+            </view>
+            <view class="allnum">昨结：
+                <text>{{marketData[19].lastSettle}}</text>
+            </view>
+        </view>
+        <view class="infodata">
+            <view class="allnum">今开：
+                <text class="coloruview">{{marketData[19].open}}</text>
+            </view>
+            <view class="allnum">昨收：
+                <text>{{marketData[19].close}}</text>
+            </view>
+            <view class="allnum">总量：
+                <text>{{marketData[19].volume}}</text>
+            </view>
+        </view>
+    </view> -->
+    <include src="../pages/temMarketHead.wxml"/>
+    <view class="klinebox">
+        <view class="klineboxtab">
+            <navigator url="/pages/market/time/time?code={{code}}" open-type="redirect">分时</navigator>
+            <navigator url="/pages/market/twoday/twoday?code={{code}}" open-type="redirect">两日</navigator>
+            <navigator url="../day/day?day=day&code={{code}}" open-type="redirect" class="{{setdayclass ? 'active' : ''}}" hover-class="active">日K</navigator>
+            <navigator url="../../../pages/market/day/day?day=week&code={{code}}" open-type="redirect" class="{{setweekclass ? 'active' : ''}}">周K</navigator>
+            <navigator url="/pages/market/day/day?day=month&code={{code}}" open-type="redirect" class="{{setmonthclass ? 'active' : ''}}">月K</navigator>
+            <view  bindtap="showMoreMethod" class="{{showMore ? 'active tabitme':'tabitme'}}">
+                <view class="tabitemwrap" >
+                    <text>
+                        <text class="minutetext" wx:if="{{Minselect}}">分钟</text>
+                        <text class="minutetext" wx:if="{{set240minclass}}">240分</text>
+                        <text class="minutetext" wx:if="{{set60minclass}}">60分</text>
+                        <text class="minutetext" wx:if="{{set30minclass}}">30分</text>
+                        <text class="minutetext" wx:if="{{set15minclass}}">15分</text>
+                        <text class="minutetext" wx:if="{{set5minclass}}">5分</text>
+                        <text class="minutetext" wx:if="{{set1minclass}}">1分</text>
+                        <text class="trianglechange"></text>
+                    </text>
+                    <view class="arrow" wx:if="{{showMoreList}}">
+                        <text class="triangle"></text>
+                        <view class="arrowinwrap">
+                            <navigator replace url="../day/day?day=240&code={{code}}" open-type="redirect" class="{{set240minclass ? 'active' : ''}}">240分</navigator>
+                            <navigator replace url="../day/day?day=60&code={{code}}" open-type="redirect" class="{{set60minclass ? 'active' : ''}}">60分</navigator>
+                            <navigator replace url="../day/day?day=30&code={{code}}" open-type="redirect" class="{{set30minclass ? 'active' : ''}}">30分</navigator>
+                            <navigator replace url="../day/day?day=15&code={{code}}" open-type="redirect" class="{{set15minclass ? 'active' : ''}}">15分</navigator>
+                            <navigator replace url="../day/day?day=5&code={{code}}"  open-type="redirect" class="{{set5minclass ? 'active' : ''}}">5分</navigator>
+                            <navigator replace url="../day/day?day=1&code={{code}}" open-type="redirect" class="{{set1minclass ? 'active' : ''}}">1分</navigator>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="echartswrap">
+            <view class="currentData">
+                <view class="madata" wx:if="{{MaActive}}">
+                    <text class="ma5">MA5:{{ma5}}</text>
+                    <text class="ma10">MA10:{{ma10}}</text>
+                    <text class="ma20">MA20:{{ma20}}</text>
+                </view>
+                <view class="madata" wx:if="{{BollActive}}">
+                    <text>BOLL(26.2)</text>
+                    <text class="ma5">MID:{{ma5b}}</text>
+                    <text class="ma10">UPPER:{{ma10b}}</text>
+                    <text class="ma20">LOWER:{{ma20b}}</text>
+                </view>
+            </view>
+            <canvas canvas-id="k-line" class="stage" width="100%" height="{{klineHeight}}" bindtouchstart="canvasmove" bindtouchmove="canvasmove"></canvas>
+            <view class="datatime">
+                <text class="tl">{{dayLeft}}</text>
+                <text class="tc">{{dayCenter}}</text>
+                <text class="tr">{{dayRight}}</text>
+            </view>
+            <view class="currentData curentvolData">
+                <view class="madata">
+                    <text class="ma5">MA5:{{ma5}}</text>
+                    <text class="ma10">MA10:{{ma10}}</text>
+                    <text class="ma20">MA20:{{ma20}}</text>
+                </view>
+            </view>
+            <canvas canvas-id="k-line-vol" class="stagevol"></canvas>
+            <view class="changedate">
+                <view class="changedateleft">
+                    <text class="{{MaActive ? 'active' :''}}" bindtap="changeMA">MA</text>
+                    <text class="{{BollActive ? 'active' :''}}" bindtap="changeBOLL">BOLL</text>
+                </view>
+                <view class="changedateright">
+                    <text class="{{VolActive ? 'active' :''}}" bindtap="changeVOL">VOL</text>
+                    <text class="{{MacdActive ? 'active' :''}}">MACD</text>
+                    <text class="{{KdjActive ? 'active' :''}}" bindtap="changeKDJ" >KDJ</text>
+                    <text class="{{RsiActive ? 'active' :''}}" bindtap="changeRSI">RSI</text>
+                    <text class="{{PosiActive ? 'active' :''}}" bindtap="changePOSI">持仓量</text>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="shadowlayer" wx:if="{{shadowlayer}}"></view>
+</view>

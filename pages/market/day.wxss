@@ -1,0 +1,215 @@
+/* index.wxss */
+
+.colordown,
+.colordown view {
+    color: #11d411;
+}
+
+.colorup {
+    color: #ff2424;
+}
+
+.marketdhead {
+    height: 120rpx;
+    padding: 0 24rpx;
+}
+
+.marketdhead .num {
+    width: 40%;
+    float: left;
+    text-align: left;
+}
+.marketdhead .num1{
+    font-size: 48rpx;
+    line-height: 48rpx;
+    margin: 16rpx 0 8rpx;
+}
+.marketdhead .num .tl {
+    font-size: 24rpx;
+    text-align: left;
+}
+
+.marketdhead .num .tl .num2 {
+    margin-right: 16rpx;
+}
+
+.infodata {
+    float: left;
+    width: 30%;
+    font-size: 24rpx;
+    margin-top: 12rpx;
+    text-align: left;
+}
+
+.allnum span {
+    margin-left: 16rpx;
+}
+.klinebox{
+    background: #fff;
+    height: calc(100vh - 120rpx);
+}
+.klinebox .klineboxtab{
+    padding: 0 24rpx;
+    background: #fff;
+    display: flex;
+    height: 78rpx;
+    border-bottom: 1rpx solid #e8e8e8;
+}
+.klinebox .klineboxtab navigator.active{
+    color: #f9c80f;
+     border-bottom: 1rpx solid #f9c80f;
+}
+.klinebox .klineboxtab navigator,
+.tabitme {
+    text-decoration: none;
+    text-align: center;
+    color: #999;
+    font-size: 24rpx;
+    line-height: 78rpx;
+    margin-bottom: -1rpx;
+    flex: 1;
+    border-bottom: 1rpx solid transparent;
+}
+.tabitme.active{
+    color: #f9c80f;
+    border-bottom: 1rpx solid #f9c80f;
+}
+.tabitme .tabitemwrap{
+    position: relative;
+    display: block;
+    font-size: 24rpx;
+    z-index: 2
+} 
+.arrow{
+    display: block;
+    position: absolute;
+    z-index: 2;
+    left:10px;
+    right:0px;
+    top:10px;
+}
+.triangle{
+    width: 0;
+    height: 0;
+    border: 12px solid transparent;
+    border-bottom-color: #fff;
+}
+.arrowinwrap{
+    background: #fff;
+}
+.arrowinwrap .trianglechange {
+          border-top-color: transparent;
+          vertical-align: text-top;
+          border-bottom: 5px solid #999;
+}
+.shadowlayer{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    background: rgba(0,0,0,.2);
+}
+/* canvas 部分樣式 */
+.echartswrap{
+    padding: 0 24rpx;
+    height: calc(100vh - 198rpx);
+    position: relative;
+}
+.currentData {
+    position: absolute;
+    left: 24rpx;
+    right: 24rpx;
+    top: 0rpx;
+    font-size: 22rpx;
+    height: 40rpx;
+}
+.curentvolData {
+    top: auto;
+    bottom: 320rpx;
+}
+.currentData text {
+    margin-right: 10rpx;
+    line-height: 40rpx;
+}
+.ma5{
+    color: #feb911
+}
+.ma10{
+    color: #63cfff;
+}
+.ma20{
+    color: #f184f5;
+}
+.stage{
+    position: absolute;
+    left: 24rpx;
+    right: 24rpx;
+    bottom: 400rpx;
+    top: 40rpx;
+    height: auto;
+    width: auto;
+}
+.datatime{
+    position: absolute;
+    left: 24rpx;
+    right: 24rpx;
+    bottom: 360rpx;
+    height: 40rpx;
+    font-size: 24rpx;
+    line-height: 24rpx;
+    text-align: center;
+}
+.datatime .tl{
+    float: left;
+}
+.datatime .tc{
+    
+}
+.datatime .tr{
+    float: right;
+}
+/* stagevol */
+.stagevol{
+    position: absolute;
+    left: 24rpx;
+    right: 24rpx;
+    bottom: 80rpx;
+    height: 240rpx;
+    width: calc(100vw - 48rpx)
+}
+.changedate {
+    position: absolute;
+    bottom: 20rpx;
+    left: 24rpx;
+    right: 24rpx;
+    height: 60rpx;
+    box-sizing: border-box;
+    font-size: 0;
+}
+.changedate text {
+    display: inline-block;
+    font-size: 24rpx;
+    line-height: 58rpx;
+    padding: 0 16rpx;
+}
+.changedate text.active {
+      color: #F9C80F;
+}
+.changedate .changedateleft {
+    height: 60rpx;
+    line-height: 60rpx;
+    box-sizing: border-box;
+    width: 28%;
+    float: left;
+    border: 1rpx solid #e8e8e8;
+}
+.changedate .changedateright {
+    height: 60rpx;
+    line-height: 60rpx;
+    box-sizing: border-box;
+    width: 72%;
+    float: right;
+    border: 1rpx solid #e8e8e8;
+}
