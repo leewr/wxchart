@@ -9,6 +9,7 @@ k线图、直方图、曲线图、保持了和echart的类似的参数配置
 	3、通过setOption方法生成图表
 		chart.setOption(options)
 ### options 参数配置
+```
 	options = {
 		grid:{
 			show: false, //是否显示直接坐标系网格
@@ -81,6 +82,7 @@ k线图、直方图、曲线图、保持了和echart的类似的参数配置
             }
 		]
 	}
+```
 ### 效果预览
 #### k线图
 ![](https://github.com/leewr/wxchart/raw/master/image/kline.png)
