@@ -1,6 +1,23 @@
-<view>使用说明</view>
-<view>参数配置</view>
-<view>K线图</view>
-<view>曲线图</view>
-<view>直方图</view>
-<view>TODO LIST</view>
+
+
+<view class='wrap'>
+  <view class='title'>使用说明</view> 
+  <view class='title'>图表快速连接</view>
+  <view class="flex-wrap">
+   <navigator class='flex-item item-box bc-orange' url="/pages/example/line/line" hover-class="navigator-hover">K线图</navigator>
+  <navigator open-type="switchTab" class='flex-item item-box bc-orange' url="/pages/market/market?title=navigate" hover-class="navigator-hover">K线图</navigator>
+    <navigator class='flex-item item-box bc-green' url="/page/navigate/navigate?title=navigate" hover-class="navigator-hover">直方图</navigator>
+    </view>
+  <view class="flex-wrap">
+    <navigator class='flex-item item-box bc-blue' url="/page/navigate/navigate?title=navigate" hover-class="navigator-hover">曲线图</navigator>
+    <navigator class='flex-item item-box bc-red' url="/page/navigate/navigate?title=navigate" hover-class="navigator-hover">曲线图</navigator>
+  </view>
+  <view class='title'>参数配置</view>
+  <view>K线图</view>
+  <view>曲线图</view>
+  <view>直方图</view>
+  <view>TODO LIST</view>
+</view>
+  
+
+

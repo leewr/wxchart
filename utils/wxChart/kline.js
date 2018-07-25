@@ -1,5 +1,52 @@
 var common = require('./common');
 var grid = require('./grid')()
+var xAxis = require('./xAxis')()
+
+var toString = Object.prototype.toString
+var isObject = function (val) {
+    return val !== null && typeof val === 'object'
+}
+var isArray = function (val) {
+    return toString.call(val) === '[object Array]'
+}
+
+function forEach (obj, fn) {
+    if (obj === null || typeof obj === 'undefined') return
+
+    if (typeof obj !== 'object') obj = [obj]
+
+    if (isArray(obj)) {
+        for (let i = 0, l = obj.length; i < l; i++) {
+            fn.call(null, obj[i], i, obj)
+        }
+    } else {
+        for (let key in obj) {
+            if (Object.prototype.hasOwnProperty.call(obj, key)) {
+                fn.call(null, obj[key], key, obj)
+            }
+        }
+    }
+}
+
+function userMerge (/* obj1, obj2, obj3, ... */) {
+    let result = {}
+    function assignValue(val, key) {
+        if (typeof result[key] === 'object' && typeof val === 'object' && !isArray(val)) {
+            result[key] = userMerge(result[key], val)
+        } else if (typeof val === 'object' && !isArray(val)) {
+            result[key] = userMerge({}, val)
+        } else {
+            if (!result[key]) {
+                result[key] = val
+            }
+        }
+    }
+    for (let i = 0, l = arguments.length; i < l; i++) {
+        forEach(arguments[i], assignValue)
+    }
+    return result
+}
+
 module.exports = function (ctxId) {
 	return {
         setOptioned: false,
@@ -14,57 +61,58 @@ module.exports = function (ctxId) {
             maxData: '',
             minData: '',
             drawed: false,
+            margin: [0, 12, 0, 12],
 			grid: {
                 show: false,
 				width: 'auto',
-				height: '110',
+				height: 'auto',
 				row: 4,
 	            col: 4,
 	            showX: true,
 	            showY: true,
 	            showEdg: true,
-	            left: 0,
-	            top: 0,
-	            right: 0,
-	            bottom: 0,
+	            left: 40,
+	            top: 10,
+	            right: 10,
+	            bottom: 20,
                 backgroundColor: 'transparent',
-                borderColor: '#ccc',
+                borderColor: '#d8d8d8',
+                borderWidth: 1,
                 showLabel: true,
                 length: 52
 			},
-            dataZoom : [
+            dataZoom: 
                 {
                     start: 0,
                     end: 1
                 }
-            ],
-			xAxis:[
+            ,
+			xAxis:
 				{
                     show: true,
                     length: 52
 				}
-			],
-			yAxis:[
+			,
+			yAxis:
                 {
                     max: '',
                     min: '',
                     show: true
                 }
-			],
-			series:[
+			,
+			series:
 				{
                     name: '',
 					type: 'bar',
 					data: [],
                     show: true,
                     lineStyle: {
-                        color: '',
+                        color: '#000',
                         width: 1,
                         type: 'solid',
                         shadowBlur: 'aa'
                     }
 				}
-			]
 		},
 		init: function () {
 			this.defaultOptions.ctx = wx.createCanvasContext(ctxId)
@@ -73,20 +121,62 @@ module.exports = function (ctxId) {
 		initConfig: function (options) {
 			this._cover(options, this.defaults)
 		},
+        /**
+         * [initOptions userOption标准化，将object转化为数组]
+         * @param  {[type]} userOptions [description]
+         * @return {[type]}             [description]
+         */
+        initOptions: function (userOptions, defaultOptions) {
+            var that = this
+            let result = {}
+            for (let i in defaultOptions) {
+                if (!userOptions[i]) {
+                    isObject(defaultOptions[i]) && !isArray(defaultOptions[i]) ? result[i] = [defaultOptions[i]] : result[i] = defaultOptions[i]
+                } else {
+                    console.log(isObject(userOptions[i]))
+                    if (isObject(userOptions[i])) {
+                        result[i] = [userOptions[i]]
+                    }
+                    console.log(result)
+                    result[i].forEach(function (item, index) {
+                        if (isObject(item)) {
+                            result[i][index] = userMerge(item, defaultOptions[i])
+                        }
+                    })
+                }
+            }
+
+            result['ctx'] = result['ctx'][0]
+            // 处理canvas宽度
+            if(result.grid[0].width === 'auto' || result.grid[0].width === '100%') {
+                wx.getSystemInfo({
+                    success: function (res) {
+                        if (result.margin) {
+                            result.grid[0].width = result.grid[0].width = that.canvasWidth = res.windowWidth - result.margin[1] - result.margin[3]
+                        } else {
+                            result.grid[0].width = that.canvasWidth = result.windowWidth;
+                        }
+                    }
+                });
+            }
+            this.defaultOptions = result
+            console.log(result)
+            return result
+        },
 		_cover: function( options, defaults ){
             // console.log(options)
             var that = this
-			var i, options = options || {};
-            // if (!setOptioned) { //未初始化
+			var i, options = options || {}
                 for ( i in defaults ){
+                    if (isArray(defaults[i])) {
+
+                    }
                     // 处理数组
                     if (Object.prototype.toString.call(defaults[i]) === '[object Array]' && options[i] !== undefined) {
                         var arr = options[i]
                         var defArr = defaults[i]
                         arr.forEach(function (item, index) {
                             for ( var k in defArr[0]) {
-                                // if (Object.prototype.toString.call(k) === '[')
-                                    // console.log(Object.prototype.toString.call(k))
                                 if (item[k] === undefined) {
                                     item[k] = defArr[0][k]
                                 }
@@ -99,13 +189,7 @@ module.exports = function (ctxId) {
                         for(let obj in defaults[i]) {
                             if (options[i][obj] === undefined) {
                                 options[i][obj] = defaults[i][obj]
-                                // console.log(typeof options[i][obj]) 
                             }
-                            // 单独处理legend.selected
-                            /*if (obj === 'selected') {
-                                obj[]
-                            }*/
-                            // console.log(options[i][obj])    
                         }
                     }
                     if ( options[i] === undefined ) {
@@ -124,18 +208,15 @@ module.exports = function (ctxId) {
                         }
                     });
                 }
-                // console.log(options)
                 this.defaultOptions = options
-                return options;
-                // console.log(options)
-            /*} else { //初始化之后
-
-            }	*/		
+                return options;	
             
 		},
 		setOption: function (options) {
             this.setOptioned = true
-			let coverOptions = this._cover(options, this.defaultOptions)
+            let coverOptions = this.initOptions(options, this.defaultOptions)
+            console.log(coverOptions)
+			// let coverOptions = this._cover(options, this.defaultOptions)
             let ctx = this.defaultOptions.ctx
             let golbData = this.dataInit(ctx, coverOptions, this.callback())
             coverOptions.maxData = golbData.maxData
@@ -235,7 +316,9 @@ module.exports = function (ctxId) {
 		draw: function (ctx, options) {
             this.drawed = false
             grid.init(ctx, options)
-            common.drawLine(options)
+            xAxis.init(ctx, options)
+            // common.drawLine(options)
+            
             ctx.draw()
             ctx.save()
             this.drawed = true

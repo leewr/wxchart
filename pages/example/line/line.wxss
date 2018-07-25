@@ -1,0 +1,5 @@
+/* pages/example/line/line.wxss */
+@import "/utils/wxChart/common.wxss";
+.stage{
+  width: 100%;
+}

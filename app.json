@@ -1,7 +1,8 @@
 {
   "pages": [
     "pages/home/index",
-    "pages/market/day"
+    "pages/market/market",
+    "pages/example/line/line"
   ],
   "window": {
     "navigationBarTextStyle": "white",
@@ -23,7 +24,7 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/market/day",
+        "pagePath": "pages/market/market",
         "iconPath": "image/market.png",
         "selectedIconPath": "image/market-active.png",
         "text": "K线"

@@ -1,0 +1,18 @@
+.wrap{
+  margin: 0 12px;
+  font-size: 28rpx;
+}
+.title{
+  font-size: 30rpx;
+  font-weight: bold;
+  margin: 24rpx 0;
+}
+.flex-wrap{
+  display: flex;
+  flex-direction: row-wrap; 
+  justify-content: space-between;
+  margin-bottom: 24rpx;
+}
+.flex-item{
+  align-items:center;
+}
