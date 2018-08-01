@@ -73,7 +73,8 @@ Page({
           show: true,
           height: 150,
           borderWidth: 0.5,
-          left: 50
+          left: 50,
+          bottom: 30
         },
         xAxis: {
             type: 'category',

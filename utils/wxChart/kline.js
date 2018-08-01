@@ -1,6 +1,7 @@
 var common = require('./common');
 var grid = require('./grid')()
 var xAxis = require('./xAxis')()
+var line = require('./line')()
 
 var toString = Object.prototype.toString
 var isObject = function (val) {
@@ -318,7 +319,7 @@ module.exports = function (ctxId) {
             grid.init(ctx, options)
             xAxis.init(ctx, options)
             // common.drawLine(options)
-            
+            line.init(ctx, options)
             ctx.draw()
             ctx.save()
             this.drawed = true

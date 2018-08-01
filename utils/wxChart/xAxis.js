@@ -58,12 +58,13 @@ module.exports = function Axis () {
 			console.log(data)
 			let dataMax = Math.max.apply(null, data)
 			let dataMin = Math.min.apply(null, data)
-			debugger
 			let range = calcRange(dataMax, dataMin)
+			grid.range = range
 			let dataLength = data.length
 			let average = (grid.height - grid.top - grid.bottom) / grid.row
 			let numAverage = (range.maxRange - range.minRange) / grid.row
 			let num = range.maxRange
+			console.log(num)
 			ctx.setTextAlign('right')
 			ctx.setTextBaseline('middle')
 			ctx.moveTo(grid.left, grid.top)
@@ -73,12 +74,10 @@ module.exports = function Axis () {
 				y: grid.top
 			}
 			for (let i = 0; i <= grid.row; i++) {
-				num -= numAverage
-				if (i < grid.row) {
-					ctx.fillText(num, a.x - 6, a.y)
-				}
+				ctx.fillText(num, a.x - 6, a.y)
 				ctx.moveTo(a.x, a.y)
 				ctx.lineTo(a.x - 3, a.y)
+				num -= numAverage
 				a.y += average
 				
 			}
