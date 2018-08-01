@@ -16,22 +16,25 @@ module.exports = function line () {
 			let widthUnit = gridWidth / data.length
 			let unit = gridHeight / (range.maxRange - range.minRange)
 
-			// 坐标系问题
+			// 坐标系转换
 			ctx.beginPath()
 			data.forEach(function (item, index) {
 				let l = (item - range.minRange) * unit
 				if (index === 0) {
 					ctx.moveTo(grid.left + index * widthUnit +  widthUnit / 2, grid.height - l - bottom)
 				} else {
-
 					ctx.lineTo(grid.left + index * widthUnit + widthUnit / 2, grid.height - l - bottom)
 				}
 			})
 		 	ctx.stroke()
-		},
-		_dataTogrid: function (options) {
-			let data = options.series[0].data
-
+		 	ctx.strokeStyle="#fff"
+		 	data.forEach(function (item, index) {
+		 		ctx.beginPath()
+		 		let l = (item - range.minRange) * unit
+		 		ctx.arc(grid.left + index * widthUnit +  widthUnit / 2,grid.height - l - bottom,2,0,2* Math.PI)
+		 		ctx.fill()
+		 		ctx.stroke()
+		 	})
 		}
 	}
 }
