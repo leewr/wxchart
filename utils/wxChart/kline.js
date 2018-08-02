@@ -112,7 +112,8 @@ module.exports = function (ctxId) {
                         width: 1,
                         type: 'solid',
                         shadowBlur: 'aa'
-                    }
+                    },
+                    smooth: false
 				}
 		},
 		init: function () {
@@ -315,11 +316,21 @@ module.exports = function (ctxId) {
             return gridData */
         },
 		draw: function (ctx, options) {
+            let series = options.series
+            console.log(series)
             this.drawed = false
             grid.init(ctx, options)
             xAxis.init(ctx, options)
             // common.drawLine(options)
-            line.init(ctx, options)
+            
+            series.forEach(function (item, index) {
+                switch (item.type) {
+                    case 'line':
+                        line.init(ctx, options)
+                        break
+                }
+            })
+            
             ctx.draw()
             ctx.save()
             this.drawed = true
