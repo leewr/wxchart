@@ -18,36 +18,54 @@ module.exports = function line () {
 			let gridWidth = grid.width - left - right
 			let widthUnit = gridWidth / data.length
 			let unit = gridHeight / (range.maxRange - range.minRange)
-			let p = []
+			let ps = []
 			// 坐标系转换
 			ctx.beginPath()
 
 			data.forEach(function (item, index) {
 				let l = (item - range.minRange) * unit
+				let x = grid.left + index * widthUnit +  widthUnit / 2
+				let y = grid.height - l - bottom
+				ps.push({x: x, y: y})
 				if (series.smooth) {
-					p.push([grid.left + index * widthUnit +  widthUnit / 2, grid.height - l - bottom])
+					
 				} else {
 					if (index === 0) {
-						ctx.moveTo(grid.left + index * widthUnit +  widthUnit / 2, grid.height - l - bottom)
+						ctx.moveTo(x, y)
 					} else {
-						ctx.lineTo(grid.left + index * widthUnit + widthUnit / 2, grid.height - l - bottom)
+						ctx.lineTo(x, y)
 					}
 				}
 			})
-
+			console.log(ps)
 			if (series.smooth) {
-				let bezierPoint = Smooth.smooth(p)
-
-				bezierPoint.forEach(function (item, index) {
-					
-				})
+				for (let i = 1; i < data.length; i++) {
+					let bezierPoint = Smooth.smooth(data, i)
+					let gridPoint = Smooth.toGrid(data[i], i)
+					let l = (bezierPoint.pA.x - range.minRange) * unit
+					if (i === 1) {
+	                    ctx.moveTo(ps[0].x, ps[0].y)
+	                }
+                	ctx.bezierCurveTo(bezierPoint.pA.x, bezierPoint.pA.y, bezierPoint.pB.x, bezierPoint.pB.y, gridPoint.x, gridPoint.y)
+				}
 			}
+			console.log('end')
 		 	ctx.stroke()
 		 	ctx.strokeStyle="#fff"
-		 	data.forEach(function (item, index) {
+
+		 	ps.forEach(function (item, index) {
 		 		ctx.beginPath()
-		 		let l = (item - range.minRange) * unit
-		 		ctx.arc(grid.left + index * widthUnit +  widthUnit / 2,grid.height - l - bottom,2,0,2* Math.PI)
+
+		 		if (index) {
+		 			ctx.fillStyle = 'red'
+		 			let bezierPoint = Smooth.smooth(ps, index, .5, .5)
+		 			ctx.arc(bezierPoint.pA.x,bezierPoint.pA.y,2,0,2* Math.PI)
+		 		    ctx.arc(bezierPoint.pB.x,bezierPoint.pB.y,2,0,2* Math.PI)
+		 		    ctx.fill()
+		 		}
+		 		ctx.beginPath()
+		 		ctx.fillStyle = 'black'
+		 		ctx.arc(item.x,item.y,2,0,2* Math.PI)
 		 		ctx.fill()
 		 		ctx.stroke()
 		 	})

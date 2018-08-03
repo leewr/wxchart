@@ -78,14 +78,15 @@ Page({
         },
         xAxis: {
             type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            data: ['1', '2', '3', '4', '5', '6', '7', '8', '9']
         },
         yAxis: {
             type: 'value'
         },
         series: {
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
-            type: 'line'
+            data: [820, 932, 901, 934, 1290, 1330, 1320, 860, 600],
+            type: 'line',
+            smooth: true
         }
     }
     lineChart = wxChart('line-chart').init()

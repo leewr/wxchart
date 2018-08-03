@@ -2,6 +2,7 @@ var common = require('./common');
 var grid = require('./grid')()
 var xAxis = require('./xAxis')()
 var line = require('./line')()
+var utils = require('../utils.js')
 
 var toString = Object.prototype.toString
 var isObject = function (val) {
@@ -135,11 +136,9 @@ module.exports = function (ctxId) {
                 if (!userOptions[i]) {
                     isObject(defaultOptions[i]) && !isArray(defaultOptions[i]) ? result[i] = [defaultOptions[i]] : result[i] = defaultOptions[i]
                 } else {
-                    console.log(isObject(userOptions[i]))
                     if (isObject(userOptions[i])) {
                         result[i] = [userOptions[i]]
                     }
-                    console.log(result)
                     result[i].forEach(function (item, index) {
                         if (isObject(item)) {
                             result[i][index] = userMerge(item, defaultOptions[i])
@@ -162,11 +161,10 @@ module.exports = function (ctxId) {
                 });
             }
             this.defaultOptions = result
-            console.log(result)
+            utils.init(result)
             return result
         },
 		_cover: function( options, defaults ){
-            // console.log(options)
             var that = this
 			var i, options = options || {}
                 for ( i in defaults ){
@@ -217,7 +215,6 @@ module.exports = function (ctxId) {
 		setOption: function (options) {
             this.setOptioned = true
             let coverOptions = this.initOptions(options, this.defaultOptions)
-            console.log(coverOptions)
 			// let coverOptions = this._cover(options, this.defaultOptions)
             let ctx = this.defaultOptions.ctx
             let golbData = this.dataInit(ctx, coverOptions, this.callback())
