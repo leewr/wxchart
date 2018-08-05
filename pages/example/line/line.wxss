@@ -3,3 +3,8 @@
 .stage{
   width: 100%;
 }
+.time{
+	font-size: 24rpx;
+	color: #666;
+	margin-left: 20rpx;
+}

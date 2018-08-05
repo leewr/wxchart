@@ -7,7 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-  
+    renderTime: 0
   },
 
   /**
@@ -66,9 +66,29 @@ Page({
   
   },
   setChart: function () {
-    console.log(new Date())
+    
     let start = new Date()
     let option = {
+      xAxis: {
+          type: 'category',
+          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      },
+      yAxis: {
+          type: 'value'
+      },
+      series: {
+          data: [820, 932, 901, 934, 1290, 1330, 1320],
+          type: 'line'
+      }
+    }
+    lineChart = wxChart('line-chart').init()
+    lineChart.setOption(option)
+    let end = new Date()
+    this.setData({renderTime: end - start})
+
+    console.log(new Date())
+    
+    let option2 = {
         grid: {
           show: true,
           height: 150,
@@ -78,42 +98,26 @@ Page({
         },
         xAxis: {
             type: 'category',
-            data: ['1', '2', '3', '4', '5', '6', '7', '8', '9']
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
         },
         yAxis: {
             type: 'value'
         },
         series: {
-            data: [820, 932, 901, 934, 1290, 1330, 1320, 860, 600],
+            name: 'Women',
+            data: [820, 932, 901, 934, 1290, 1330, 1320],
             type: 'line',
-            smooth: true
+            smooth: true,
+            itemStyle: {
+              opacity: 1
+            }
         }
     }
-    lineChart = wxChart('line-chart').init()
-    lineChart.setOption(option)
-    let end = new Date()
-    console.log('render: ' + (end - start) + 'ms');
+    let start2 = new Date()
+    let lineChart2 = wxChart('line-chart2').init()
+    lineChart2.setOption(option2)
+    let end2 = new Date()
+    this.setData({renderTime2: end2 - start2})
 
-    let ctx = wx.createCanvasContext('test-chart')
-
-    // ctx.rect(10, 10, 350, 150)
-    ctx.setLineWidth(1)
-    ctx.setLineDash([10, 1])
-    ctx.moveTo(10, 10)
-    ctx.lineTo(350, 10)
-    ctx.lineTo(350, 140)
-    ctx.lineTo(10, 140)
-    ctx.lineTo(10, 10)
-
-    ctx.moveTo(10, 50)
-    ctx.lineTo(18, 50)
-    ctx.moveTo(20, 50)
-    ctx.lineTo(38, 50)
-    ctx.moveTo(40, 50)
-    ctx.lineTo(58, 50)
-    ctx.moveTo(60, 50)
-    ctx.lineTo(68, 50)
-    ctx.stroke()
-    ctx.draw()
   }
 })

@@ -2,6 +2,7 @@ var common = require('./common');
 var grid = require('./grid')()
 var xAxis = require('./xAxis')()
 var line = require('./line')()
+var legend = require('./legend')()
 var utils = require('../utils.js')
 
 var toString = Object.prototype.toString
@@ -37,8 +38,8 @@ function userMerge (/* obj1, obj2, obj3, ... */) {
             result[key] = userMerge(result[key], val)
         } else if (typeof val === 'object' && !isArray(val)) {
             result[key] = userMerge({}, val)
-        } else {
-            if (!result[key]) {
+        }else {
+            if (result[key] === undefined) {
                 result[key] = val
             }
         }
@@ -64,18 +65,26 @@ module.exports = function (ctxId) {
             minData: '',
             drawed: false,
             margin: [0, 12, 0, 12],
+            legend: {
+                show: true,
+                data: [],
+                top: 0,
+                left: 0,
+                position: 'top',
+                align: 'center'
+            },
 			grid: {
                 show: false,
 				width: 'auto',
-				height: 'auto',
+				height: 150,
 				row: 4,
 	            col: 4,
 	            showX: true,
 	            showY: true,
 	            showEdg: true,
-	            left: 40,
-	            top: 10,
-	            right: 10,
+	            left: 45,
+	            top: 20,
+	            right: 0,
 	            bottom: 20,
                 backgroundColor: 'transparent',
                 borderColor: '#d8d8d8',
@@ -114,7 +123,10 @@ module.exports = function (ctxId) {
                         type: 'solid',
                         shadowBlur: 'aa'
                     },
-                    smooth: false
+                    smooth: false,
+                    itemStyle: {
+                        opacity: 1
+                    }
 				}
 		},
 		init: function () {
@@ -318,6 +330,7 @@ module.exports = function (ctxId) {
             this.drawed = false
             grid.init(ctx, options)
             xAxis.init(ctx, options)
+            legend.init(ctx, options)
             // common.drawLine(options)
             
             series.forEach(function (item, index) {
