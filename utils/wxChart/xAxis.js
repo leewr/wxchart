@@ -28,7 +28,6 @@ module.exports = function Axis () {
 			let xAxis = options.xAxis[0]
 			let dataLength = xAxis.data.length
 			let average = (grid.width - grid.left - grid.right) / dataLength
-			console.log(xAxis)
 			// 坐标横线
 			ctx.setStrokeStyle('#000')
 			ctx.setTextAlign('center')

@@ -68,10 +68,11 @@ module.exports = function (ctxId) {
             legend: {
                 show: true,
                 data: [],
-                top: 0,
+                top: 6,
                 left: 0,
+                right: 0,
                 position: 'top',
-                align: 'center'
+                align: 'left'
             },
 			grid: {
                 show: false,
@@ -83,7 +84,7 @@ module.exports = function (ctxId) {
 	            showY: true,
 	            showEdg: true,
 	            left: 45,
-	            top: 20,
+	            top: 30,
 	            right: 0,
 	            bottom: 20,
                 backgroundColor: 'transparent',
