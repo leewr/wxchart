@@ -2,8 +2,7 @@
   "pages": [
     "pages/home/index",
     "pages/market/market",
-    "pages/example/line/line",
-    "pages/example/legend/legend"
+    "pages/example/line/line"
   ],
   "window": {
     "navigationBarTextStyle": "white",

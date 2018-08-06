@@ -7,7 +7,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    renderTime: 0
+    renderTime: 0,
+    renderTime2: 0,
+    renderTime3: 0
   },
 
   /**
@@ -119,5 +121,28 @@ Page({
     let end2 = new Date()
     this.setData({renderTime2: end2 - start2})
 
+    let option3 = {
+      xAxis: {
+          type: 'category',
+          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      },
+      yAxis: {
+          type: 'value'
+      },
+      series: [
+        {
+            data: [8201, 9321, 9021, 9234, 1290, 13301, 12320],
+            type: 'line',
+            smooth: false
+        },
+        {
+            data: [8220, 9322, 9012, 9342, 12290, 12330, 13220],
+            type: 'line',
+            smooth: false
+        }
+      ]
+    }
+    let lineChart3 = wxChart('line-chart3').init()
+    lineChart3.setOption(option3)
   }
 })

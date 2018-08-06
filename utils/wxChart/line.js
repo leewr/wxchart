@@ -3,11 +3,15 @@ const utils = require('../utils.js')
 module.exports = function line () {
 	return {
 		init: function (ctx, options) {
-			this._draw(ctx, options)
+			const series = options.series
+			console.log(options)
+			series.forEach((item, index) => {
+				this._drawUnit(ctx, options, index)
+			})
 		},
-		_draw: function (ctx, options) {
-			let series = options.series[0]
-			let data = utils.dataHander()
+		_drawUnit: function (ctx, options, index) {
+			let series = options.series[index]
+			let data = utils.dataHander(series.data)
 			console.log(data)
 			// 坐标系转换
 			ctx.beginPath()
@@ -46,7 +50,6 @@ module.exports = function line () {
 			 		ctx.stroke()
 			 	})
 		 	}
-		 	
 		}
 	}
 }

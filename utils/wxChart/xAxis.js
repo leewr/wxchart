@@ -2,11 +2,6 @@ import { calcRange } from './chart-data.js'
 // xAxis x轴线
 module.exports = function Axis () {
 	return {
-		/**
-		 * [init x/y]
-		 * @param  {[type]} type [description]
-		 * @return {[type]}      [description]
-		 */
 		init: function (ctx, options) {
 			this._draw(ctx, options)
 		},
@@ -53,12 +48,26 @@ module.exports = function Axis () {
 		_drawYline: function (ctx, options) {
 			let grid = options.grid[0]
 			let yAxis = options.yAxis[0]
-			let data = yAxis.data ? yAxis.data : options.series[0].data
+			let data = []
+			if (yAxis.data) {
+				data = yAxis.data
+			} else {
+				options.series.map((item, name) => {
+					console.log(item['data'])
+					data.push(item['data'])
+				})
+			}
+			let maxDataArr = [],
+				minDataArr = []
+			data.forEach((item, index) => {
+				let max = Math.max.apply(null, item)
+				let min = Math.min.apply(null, item)
+				maxDataArr.push(max)
+				minDataArr.push(min)
+			})
+			
+			let range = calcRange(Math.max.apply(null, maxDataArr), Math.min.apply(null, minDataArr))
 
-			console.log(data)
-			let dataMax = Math.max.apply(null, data)
-			let dataMin = Math.min.apply(null, data)
-			let range = calcRange(dataMax, dataMin)
 			grid.range = range
 			let dataLength = data.length
 			let average = (grid.height - grid.top - grid.bottom) / grid.row

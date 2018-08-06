@@ -47,14 +47,12 @@ module.exports = function grid () {
         _drawY: function (ctx, options) {
             let grid =options.grid[0]
             let average = Math.floor((grid.width - grid.left - grid.right) / grid.row)
-            console.log(average)
             let a = {
                 x: grid.left,
                 y1: grid.top,
                 y2: grid.height - grid.bottom
             }
             for (let i = 0; i < grid.row - 1; i++) {
-                console.log(a.x)
                 a.x += average
                 ctx.moveTo(a.x, a.y1)
                 ctx.lineTo(a.x, a.y2)

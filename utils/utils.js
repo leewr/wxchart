@@ -9,12 +9,12 @@ function getOptions () {
 /*
 * 已处理以grid为坐标轴
  */
-function dataHander () {
+function dataHander (data) {
 	let options = getOptions()
 	let grid = options.grid[0]
 	let width = options.grid[0].width
 	let height = options.grid[0].height
-	let data = options.series[0].data
+	// let data = options.series[0].data
 	let widthUnit = (width - grid.left - grid.right) / data.length
 	let heightUnit = (height - grid.top - grid.bottom) / (grid.range.maxRange - grid.range.minRange)
 	let result = []

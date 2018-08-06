@@ -2,7 +2,7 @@ var common = require('./common');
 var grid = require('./grid')()
 var xAxis = require('./xAxis')()
 var line = require('./line')()
-var legend = require('./legend')()
+// var legend = require('./legend')()
 var utils = require('../utils.js')
 
 var toString = Object.prototype.toString
@@ -39,6 +39,7 @@ function userMerge (/* obj1, obj2, obj3, ... */) {
         } else if (typeof val === 'object' && !isArray(val)) {
             result[key] = userMerge({}, val)
         }else {
+            console.log(1)
             if (result[key] === undefined) {
                 result[key] = val
             }
@@ -150,7 +151,7 @@ module.exports = function (ctxId) {
                     isObject(defaultOptions[i]) && !isArray(defaultOptions[i]) ? result[i] = [defaultOptions[i]] : result[i] = defaultOptions[i]
                 } else {
                     if (isObject(userOptions[i])) {
-                        result[i] = [userOptions[i]]
+                        result[i] = isArray(userOptions[i]) ? userOptions[i] : [userOptions[i]]
                     }
                     result[i].forEach(function (item, index) {
                         if (isObject(item)) {
@@ -331,7 +332,7 @@ module.exports = function (ctxId) {
             this.drawed = false
             grid.init(ctx, options)
             xAxis.init(ctx, options)
-            legend.init(ctx, options)
+            // legend.init(ctx, options)
             // common.drawLine(options)
             
             series.forEach(function (item, index) {
