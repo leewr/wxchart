@@ -52,6 +52,8 @@ function userMerge (/* obj1, obj2, obj3, ... */) {
 }
 
 module.exports = function (ctxId) {
+    let color1 = '#1890FF'
+    let textColor = '#808080'
 	return {
         setOptioned: false,
         drawIndex: 0,
@@ -66,6 +68,26 @@ module.exports = function (ctxId) {
             minData: '',
             drawed: false,
             margin: [0, 12, 0, 12],
+            theme: {
+                defaultColor: color1,
+                line: {
+                    stroke: color1,
+                    lineWidth: 1
+                },
+                textStyle: {
+                    color: textColor,
+                    family: '"Helvetica Neue", "San Francisco", Helvetica, Tahoma, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", sans-serif',
+                    size: 12,
+                    style: 'normal',
+                    weight: 'normal'
+                },
+                grid: {
+                    stroke: color1,
+                    lineWidth: 1,
+                    lineDash: [2]
+                },
+                color: ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3']
+            },
             legend: {
                 show: true,
                 data: [],
