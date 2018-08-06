@@ -83,7 +83,7 @@ Page({
           type: 'line',
           lineStyle: {
             color: '#223273',
-            width: 3
+            width: 2
           }
       }
     }

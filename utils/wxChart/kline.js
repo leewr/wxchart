@@ -149,6 +149,9 @@ module.exports = function (ctxId) {
                     smooth: false,
                     itemStyle: {
                         opacity: 1
+                    },
+                    areaStyle: {
+                        color: 'aut'
                     }
 				}
 		},
