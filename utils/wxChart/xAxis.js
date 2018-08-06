@@ -53,7 +53,6 @@ module.exports = function Axis () {
 				data = yAxis.data
 			} else {
 				options.series.map((item, name) => {
-					console.log(item['data'])
 					data.push(item['data'])
 				})
 			}
@@ -73,7 +72,6 @@ module.exports = function Axis () {
 			let average = (grid.height - grid.top - grid.bottom) / grid.row
 			let numAverage = (range.maxRange - range.minRange) / grid.row
 			let num = range.maxRange
-			console.log(num)
 			ctx.setTextAlign('right')
 			ctx.setTextBaseline('middle')
 			ctx.moveTo(grid.left, grid.top)

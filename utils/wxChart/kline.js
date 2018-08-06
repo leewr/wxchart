@@ -2,7 +2,7 @@ var common = require('./common');
 var grid = require('./grid')()
 var xAxis = require('./xAxis')()
 var line = require('./line')()
-// var legend = require('./legend')()
+var legend = require('./legend')()
 var utils = require('../utils.js')
 
 var toString = Object.prototype.toString
@@ -39,7 +39,6 @@ function userMerge (/* obj1, obj2, obj3, ... */) {
         } else if (typeof val === 'object' && !isArray(val)) {
             result[key] = userMerge({}, val)
         }else {
-            console.log(1)
             if (result[key] === undefined) {
                 result[key] = val
             }
@@ -71,7 +70,7 @@ module.exports = function (ctxId) {
             theme: {
                 defaultColor: color1,
                 line: {
-                    stroke: color1,
+                    color: color1,
                     lineWidth: 1
                 },
                 textStyle: {
@@ -83,10 +82,10 @@ module.exports = function (ctxId) {
                 },
                 grid: {
                     stroke: color1,
-                    lineWidth: 1,
+                    lineWidth: 2,
                     lineDash: [2]
                 },
-                color: ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3']
+                color: ['#1890FF', '#2FC25B', '#FACC14', '#223273', '#8543E0', '#13C2C2', '#3436C7', '#F04864'],
             },
             legend: {
                 show: true,
@@ -142,7 +141,7 @@ module.exports = function (ctxId) {
 					data: [],
                     show: true,
                     lineStyle: {
-                        color: '#000',
+                        color: 'auto',
                         width: 1,
                         type: 'solid',
                         shadowBlur: 'aa'
@@ -274,8 +273,6 @@ module.exports = function (ctxId) {
             for (var i = 0; i < series.length; i++) {
                 let dataStart = options.dataZoom[0].start * series[i].data.length
                 let dataEnd = options.dataZoom[0].end * series[i].data.length
-                // console.log("dataStart: " + dataStart)
-                // console.log("dataEnd: " + dataEnd)
                 if (series[i].show) {
                     if (i === firstIndex) {
                         minData = maxData = common._maxValueOfArr(series[i].data.slice(dataStart, dataEnd - 1))
@@ -350,11 +347,10 @@ module.exports = function (ctxId) {
         },
 		draw: function (ctx, options) {
             let series = options.series
-            console.log(series)
             this.drawed = false
             grid.init(ctx, options)
             xAxis.init(ctx, options)
-            // legend.init(ctx, options)
+            legend.init(ctx, options)
             // common.drawLine(options)
             
             series.forEach(function (item, index) {
@@ -377,7 +373,6 @@ module.exports = function (ctxId) {
 
             if(Math.abs((params.x - that.lastTempIndexData.x)) - this.defaultOptions.grid.width / 52 > 0 && that.drawed) {
                 params.dataLastIndex = common.getCurrentIndexData({x:params.x,y:params.y}, this.defaultOptions)
-                // console.log(this.drawIndex++)
                 if (type === 'highlight') {
                     if (typeof callback === 'function') {
                         that.lastTempIndexData.x = params.x

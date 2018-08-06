@@ -80,7 +80,11 @@ Page({
       },
       series: {
           data: [820, 932, 901, 934, 1290, 1330, 1320],
-          type: 'line'
+          type: 'line',
+          lineStyle: {
+            color: '#223273',
+            width: 3
+          }
       }
     }
     lineChart = wxChart('line-chart').init()
@@ -88,8 +92,6 @@ Page({
     let end = new Date()
     this.setData({renderTime: end - start})
 
-    console.log(new Date())
-    
     let option2 = {
         grid: {
           show: true,
