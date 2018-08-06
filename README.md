@@ -1,3 +1,4 @@
+### modify 分支重写img
 # wxchart 
 k线图、直方图、曲线图、保持了和echart的类似的参数配置
 
