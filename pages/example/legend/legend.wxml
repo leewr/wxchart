@@ -1,0 +1,5 @@
+<!--pages/example/legend/legend.wxml-->
+<view class='wrap'>
+  <view class='title'>legend示例（带点）<text class="time">渲染时间：{{renderTime}} ms</text></view>
+  <canvas canvas-id="line-chart" class="stage" width="100%" height="{{klineHeight}}" bindtouchstart="canvasmove" bindtouchmove="canvasmove"></canvas>
+</view>
