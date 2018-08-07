@@ -71,6 +71,7 @@ Page({
     
     let start = new Date()
     let option = {
+      name: 1,
       xAxis: {
           type: 'category',
           data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -93,6 +94,7 @@ Page({
     this.setData({renderTime: end - start})
 
     let option2 = {
+        name: 2,
         grid: {
           show: true,
           height: 150,
@@ -124,6 +126,7 @@ Page({
     this.setData({renderTime2: end2 - start2})
 
     let option3 = {
+      name: 2,
       xAxis: {
           type: 'category',
           data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -133,14 +136,20 @@ Page({
       },
       series: [
         {
-            data: [8201, 9321, 9021, 9234, 1290, 13301, 12320],
+            data: [4201, 5321, 6021, 7234, 2290, 8301, 1220],
             type: 'line',
-            smooth: false
+            smooth: false,
+            areaStyle: {
+              opacity: 1
+            }
         },
         {
             data: [8220, 9322, 9012, 9342, 12290, 12330, 13220],
             type: 'line',
-            smooth: false
+            smooth: false,
+            areaStyle: {
+              opacity: 1
+            }
         }
       ]
     }
