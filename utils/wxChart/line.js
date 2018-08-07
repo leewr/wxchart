@@ -23,6 +23,7 @@ module.exports = function line () {
 			}
 			ctx.setLineWidth = item.lineStyle.lineWidth
 			let point0 = utils.dataTogrid(data[0])
+			let pointLast = utils.dataTogrid(data[data.length - 1])
 			data.forEach(function (i, n) {
 				let point = utils.dataTogrid(i)
 				if (n === 0) {
@@ -43,20 +44,24 @@ module.exports = function line () {
 				if (n === data.length - 1) {
 					// 包裹区域
 					// 绘制层级问题
-				 	if (item.areaStyle.opacity) {
-				 		let color = utils.hexToRgb(item.areaStyle.color === 'auto' ? theme.color[index] : item.areaStyle.color)
-				 		color = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',' + '0.5)'
-						ctx.lineTo(point.x, grid.height - grid.bottom)
-						ctx.lineTo(grid.left, grid.height - grid.bottom)
-						ctx.lineTo(point0.x, point0.y)
-						ctx.fillStyle = color
-						ctx.closePath()
-						ctx.fill()
-					}
+				 	
 				}
 			})
 
 		 	ctx.stroke()
+
+		 	// 背景区域
+		 	if (item.areaStyle.opacity) {
+		 		let color = utils.hexToRgb(item.areaStyle.color === 'auto' ? theme.color[index] : item.areaStyle.color)
+		 		color = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',' + '0.5)'
+				ctx.lineTo(pointLast.x, grid.height - grid.bottom - 1)
+				ctx.lineTo(grid.left, grid.height - grid.bottom - 1)
+				ctx.lineTo(point0.x, point0.y)
+				ctx.fillStyle = color
+				ctx.closePath()
+				ctx.fill()
+			}
+
 		 	ctx.strokeStyle="#fff"
 
 		 	// 显示圆点
