@@ -151,7 +151,9 @@ module.exports = function (ctxId) {
                         opacity: 1
                     },
                     areaStyle: {
-                        color: 'aut'
+                        origin: 'auto',
+                        opacity: 0,
+                        color: 'auto'
                     }
 				}
 		},
@@ -177,11 +179,16 @@ module.exports = function (ctxId) {
                     if (isObject(userOptions[i])) {
                         result[i] = isArray(userOptions[i]) ? userOptions[i] : [userOptions[i]]
                     }
-                    result[i].forEach(function (item, index) {
-                        if (isObject(item)) {
-                            result[i][index] = userMerge(item, defaultOptions[i])
-                        }
-                    })
+                    if (result[i]) {
+                        result[i].forEach(function (item, index) {
+                            if (isObject(item)) {
+                                result[i][index] = userMerge(item, defaultOptions[i])
+                            }
+                        })
+                    }
+                    if (typeof result[i] === 'number' || typeof result[i] === 'string') {
+                        result[i] = userOptions[i]
+                    }
                 }
             }
 
@@ -255,9 +262,9 @@ module.exports = function (ctxId) {
             let coverOptions = this.initOptions(options, this.defaultOptions)
 			// let coverOptions = this._cover(options, this.defaultOptions)
             let ctx = this.defaultOptions.ctx
-            let golbData = this.dataInit(ctx, coverOptions, this.callback())
-            coverOptions.maxData = golbData.maxData
-            coverOptions.minData = golbData.minData
+            // let golbData = this.dataInit(ctx, coverOptions, this.callback())
+            // coverOptions.maxData = golbData.maxData
+            // coverOptions.minData = golbData.minData
 			this.draw(ctx, coverOptions)
 		},
         dataInit: function (ctx, options, callback) {
@@ -359,7 +366,7 @@ module.exports = function (ctxId) {
             series.forEach(function (item, index) {
                 switch (item.type) {
                     case 'line':
-                        line.init(ctx, options)
+                        line.init(ctx, item, index, options)
                         break
                 }
             })
