@@ -140,7 +140,10 @@ Page({
         {
             data: [8220, 9322, 9012, 9342, 12290, 12330, 13220],
             type: 'line',
-            smooth: false
+            smooth: false,
+            itemStyle: {
+              opacity: 1
+            }
         }
       ]
     }

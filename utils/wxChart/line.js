@@ -29,7 +29,6 @@ module.exports = function line () {
 				if (index === 0) {
 					ctx.moveTo(point.x, point.y)
 				}
-
 				if (item.smooth) {
 					if (index > 0) {
 						let bezierPoint = Smooth.smooth(data, index - 1)
