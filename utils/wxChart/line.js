@@ -3,7 +3,6 @@ const utils = require('../utils.js')
 module.exports = function line () {
 	return {
 		init: function (ctx, item, index, options) {
-
 				this._drawUnit(ctx, item, index, options)
 			//})
 		},
@@ -74,6 +73,9 @@ module.exports = function line () {
 			 		ctx.stroke()
 			 	})
 		 	}
+		},
+		update: function (ctx, item, index, options) {
+			
 		}
 	}
 }

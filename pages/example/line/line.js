@@ -157,9 +157,14 @@ Page({
     lineChart3.setOption(option3)
   },
   touchStart: function (event) {
-    console.log(event)
+    // console.log(event)
     lineChart.on(event.type, event, function (e) {
-      console.log(e)
+      // console.log(e)
+    })
+  },
+  touchMove: function (event) {
+    lineChart.on(event.type, event, function (e) {
+      // console.log(e)
     })
   }
 })

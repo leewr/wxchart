@@ -4,6 +4,7 @@ var xAxis = require('./xAxis')()
 var line = require('./line')()
 var legend = require('./legend')()
 var utils = require('../utils.js')
+// var event = require('../event.js')
 
 var toString = Object.prototype.toString
 var isObject = function (val) {
@@ -53,6 +54,7 @@ function userMerge (/* obj1, obj2, obj3, ... */) {
 module.exports = function (ctxId) {
     let color1 = '#1890FF'
     let textColor = '#808080'
+    let lastDistance
 	return {
         setOptioned: false,
         drawIndex: 0,
@@ -375,24 +377,49 @@ module.exports = function (ctxId) {
             ctx.save()
             this.drawed = true
 		},
-        //提供chart事件的支持
+        // 提供chart事件的支持
         on: function(type, params, callback) {
             var that = this
+            var ctx = this.defaultOptions.ctx
             // 参数处理
-            var params = params.touches[0]
-
-            if(Math.abs((params.x - that.lastTempIndexData.x)) - this.defaultOptions.grid.width / 52 > 0 && that.drawed) {
-                params.dataLastIndex = common.getCurrentIndexData({x:params.x,y:params.y}, this.defaultOptions)
-                if (type === 'highlight') {
-                    if (typeof callback === 'function') {
-                        that.lastTempIndexData.x = params.x
-                        that.lastTempIndexData.y = params.y
-                        grid.drawHigtLight(this.defaultOptions, params.x, params.y)
-                        callback(params)
-                        that.draw(this.defaultOptions.ctx, this.defaultOptions)
-                    }
-                }
-            }
+            // lastDistance = params.touches[0]
+            console.log(params)
+            // ctx.restore()
+            // ctx.translate(20, 20)
+            // this.draw(ctx, this.defaultOptions)
+            // ctx.draw()
+            // switch (type) {
+            //     case 'touchstart': {
+            //         console.log(type)
+            //         lastDistance = params.touches[0]
+            //         break;
+            //     }
+            //     case 'touchmove': {
+            //         console.log('touchmove', type)
+            //         var currentDistance = params.touches[0]
+            //         var distanceX = currentDistance.x - lastDistance.x
+            //         console.log(distanceX)
+            //         if (currentDistance.x - lastDistance.x < 0) {
+            //             // 左滑动
+            //             ctx.restore()
+            //             ctx.translate(20, 20)
+            //             ctx.draw()
+            //         }
+            //         break;
+            //     }
+            // }
+            // if(Math.abs((params.x - that.lastTempIndexData.x)) - this.defaultOptions.grid.width / 52 > 0 && that.drawed) {
+            //     params.dataLastIndex = common.getCurrentIndexData({x:params.x,y:params.y}, this.defaultOptions)
+            //     if (type === 'highlight') {
+            //         if (typeof callback === 'function') {
+            //             that.lastTempIndexData.x = params.x
+            //             that.lastTempIndexData.y = params.y
+            //             grid.drawHigtLight(this.defaultOptions, params.x, params.y)
+            //             callback(params)
+            //             that.draw(this.defaultOptions.ctx, this.defaultOptions)
+            //         }
+            //     }
+            // }
         },
         callback: function () {
 
