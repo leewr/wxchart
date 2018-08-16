@@ -155,5 +155,11 @@ Page({
     }
     let lineChart3 = wxChart('line-chart3').init()
     lineChart3.setOption(option3)
+  },
+  touchStart: function (event) {
+    console.log(event)
+    lineChart.on(event.type, event, function (e) {
+      console.log(e)
+    })
   }
 })
