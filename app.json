@@ -3,7 +3,8 @@
     "pages/home/index",
     "pages/market/market",
     "pages/example/line/line",
-    "pages/example/legend/legend"
+    "pages/example/legend/legend",
+    "pages/example/pie/pie"
   ],
   "window": {
     "navigationBarTextStyle": "white",

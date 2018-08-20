@@ -4,6 +4,7 @@ var xAxis = require('./xAxis')()
 var line = require('./line')()
 var legend = require('./legend')()
 var utils = require('../utils.js')
+var pie = require('./pie.js')
 // var event = require('../event.js')
 
 var toString = Object.prototype.toString
@@ -366,9 +367,15 @@ module.exports = function (ctxId) {
             // common.drawLine(options)
             
             series.forEach(function (item, index) {
+                console.log(item.type)
                 switch (item.type) {
                     case 'line':
+                        console.log('line')
                         line.init(ctx, item, index, options)
+                        break
+                    case 'pie':
+                        console.log('pie')
+                        pie.init(ctx, item)
                         break
                 }
             })
