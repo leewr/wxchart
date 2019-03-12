@@ -112,7 +112,23 @@ module.exports = function (ctxId) {
 	            top: 30,
 	            right: 0,
 	            bottom: 20,
-                backgroundColor: 'transparent',
+                backgroundColor: {
+                    type: 'linear',
+                    x: 0,
+                    y: 0,
+                    x2: 0,
+                    y2: 0,
+                    colorStops: [
+                        {
+                            offset: 0,
+                            color: 'red'
+                        },
+                        {
+                            offset: 1,
+                            color: 'green'
+                        }
+                    ]
+                },
                 borderColor: '#d8d8d8',
                 borderWidth: 1,
                 showLabel: true,
@@ -362,23 +378,21 @@ module.exports = function (ctxId) {
             let series = options.series
             this.drawed = false
             grid.init(ctx, options)
-            xAxis.init(ctx, options)
-            legend.init(ctx, options)
+            // xAxis.init(ctx, options)
+            // legend.init(ctx, options)
             // common.drawLine(options)
             
-            series.forEach(function (item, index) {
-                console.log(item.type)
-                switch (item.type) {
-                    case 'line':
-                        console.log('line')
-                        line.init(ctx, item, index, options)
-                        break
-                    case 'pie':
-                        console.log('pie')
-                        // pie.init(ctx, item)
-                        break
-                }
-            })
+            // series.forEach(function (item, index) {
+            //     console.log(item.type)
+            //     switch (item.type) {
+            //         case 'line':
+            //             line.init(ctx, item, index, options)
+            //             break
+            //         case 'pie':
+            //             console.log('pie')
+            //             break
+            //     }
+            // })
             
             ctx.draw()
             ctx.save()

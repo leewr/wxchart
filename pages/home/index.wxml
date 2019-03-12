@@ -18,6 +18,9 @@
     <navigator class='flex-item item-box bc-red' url="/page/navigate/navigate?title=navigate" hover-class="navigator-hover">曲线图</navigator>
     <navigator class='flex-item item-box bc-orange' url="/page/navigate/navigate?title=navigate" hover-class="navigator-hover">饼图</navigator>
   </view>
+  <view class="flex-wrap">
+    <navigator class='flex-item item-box bc-blue' url="/pages/example/linetest/linetest?title=navigate" hover-class="navigator-hover">折线图</navigator>
+  </view>
   <view class='title'>参数配置</view>
   <view>K线图</view>
   <view>曲线图</view>

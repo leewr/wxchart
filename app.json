@@ -4,7 +4,8 @@
     "pages/market/market",
     "pages/example/line/line",
     "pages/example/legend/legend",
-    "pages/example/pie/pie"
+    "pages/example/pie/pie",
+    "pages/example/linetest/linetest"
   ],
   "window": {
     "navigationBarTextStyle": "white",

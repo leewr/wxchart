@@ -3,6 +3,7 @@ module.exports = function grid () {
     return {
         init: function (ctx, options) {
             let grid = options.grid[0]
+            this._drawBg(ctx, options)
             grid.show && this._draw(ctx, options)
         },
         _draw: function (ctx, options) {
@@ -12,6 +13,29 @@ module.exports = function grid () {
             this._drawX(ctx, options)
             this._drawY(ctx, options)
             ctx.stroke()
+        },
+        _drawBg: function(ctx, options) {
+            console.log(typeof options.grid[0].backgroundColor)
+            if (typeof options.grid[0].backgroundColor === 'object') {
+                console.log('111')
+                const color = options.grid[0].backgroundColor
+                const colorStops = color.colorStops
+                const grd = ctx.createLinearGradient(0, 0, 200, 200)
+                if (colorStops.length > 0) {
+                    colorStops.forEach(item => {
+                        grd.addColorStop(item.offset, item.color)
+                    })
+                    // grd.addColorStop(0, 'red')
+                    // grd.addColorStop(0.16, 'orange')
+                    // grd.addColorStop(0.33, 'yellow')
+                    // grd.addColorStop(0.5, 'green')
+                    // grd.addColorStop(0.66, 'cyan')
+                    // grd.addColorStop(0.83, 'blue')
+                    // grd.addColorStop(1, 'purple')
+                    ctx.setFillStyle(grd)
+                    ctx.fillRect(0, 0, 150, 150)
+                }
+            }
         },
         /**
          * [_drawX description]
@@ -23,6 +47,8 @@ module.exports = function grid () {
             ctx.setLineWidth(1)
             let grid = options.grid[0]
             let average = Math.floor((grid.height - grid.top - grid.bottom) / grid.col)
+            grid.left = options.yAxis[0].show ? grid.left : 0
+            console.log('grid.left', grid.left)
             let x = {
                 x: grid.left,
                 y: grid.top

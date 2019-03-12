@@ -15,7 +15,8 @@ module.exports = function Axis () {
 			this._drawXline(ctx, options)
 		},
 		_drawYAxis: function (ctx, options) {
-			this._drawYline(ctx, options)
+			this._ylineCalc(ctx, options)
+			options.yAxis.show && this._drawYline(ctx, options)
 		},
 		_drawXline: function (ctx, options) {
 			// XAxis 只允许底部一个轴
@@ -46,6 +47,51 @@ module.exports = function Axis () {
 			}
 		},
 		_drawYline: function (ctx, options) {
+			// let grid = options.grid[0]
+			// let yAxis = options.yAxis[0]
+			// let data = []
+			// if (yAxis.data) {
+			// 	data = yAxis.data
+			// } else {
+			// 	options.series.map((item, name) => {
+			// 		data.push(item['data'])
+			// 	})
+			// }
+			let maxDataArr = [],
+				minDataArr = []
+			data.forEach((item, index) => {
+				let max = Math.max.apply(null, item)
+				let min = Math.min.apply(null, item)
+				maxDataArr.push(max)
+				minDataArr.push(min)
+			})
+			
+			let range = calcRange(Math.max.apply(null, maxDataArr), Math.min.apply(null, minDataArr))
+
+			grid.range = range
+			let dataLength = data.length
+			let average = (grid.height - grid.top - grid.bottom) / grid.row
+			let numAverage = (range.maxRange - range.minRange) / grid.row
+			let num = range.maxRange
+
+			ctx.setTextAlign('right')
+			ctx.setTextBaseline('middle')
+			console.log('grid.left', grid.left)
+			ctx.moveTo(grid.left, grid.top)
+			ctx.lineTo(grid.left, grid.height - grid.bottom)
+			let a = {
+				x: grid.left,
+				y: grid.top
+			}
+			for (let i = 0; i <= grid.row; i++) {
+				ctx.fillText(num, a.x - 6, a.y)
+				ctx.moveTo(a.x, a.y)
+				ctx.lineTo(a.x - 3, a.y)
+				num -= numAverage
+				a.y += average
+			}
+		},
+		_ylineCalc: function (ctx, options) {
 			let grid = options.grid[0]
 			let yAxis = options.yAxis[0]
 			let data = []
@@ -66,28 +112,8 @@ module.exports = function Axis () {
 			})
 			
 			let range = calcRange(Math.max.apply(null, maxDataArr), Math.min.apply(null, minDataArr))
-
 			grid.range = range
-			let dataLength = data.length
-			let average = (grid.height - grid.top - grid.bottom) / grid.row
-			let numAverage = (range.maxRange - range.minRange) / grid.row
-			let num = range.maxRange
-			ctx.setTextAlign('right')
-			ctx.setTextBaseline('middle')
-			ctx.moveTo(grid.left, grid.top)
-			ctx.lineTo(grid.left, grid.height - grid.bottom)
-			let a = {
-				x: grid.left,
-				y: grid.top
-			}
-			for (let i = 0; i <= grid.row; i++) {
-				ctx.fillText(num, a.x - 6, a.y)
-				ctx.moveTo(a.x, a.y)
-				ctx.lineTo(a.x - 3, a.y)
-				num -= numAverage
-				a.y += average
-				
-			}
+			grid.left = grid.show ? grid.left : 0
 		}
 	}
 }
