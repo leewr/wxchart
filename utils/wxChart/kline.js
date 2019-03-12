@@ -4,7 +4,7 @@ var xAxis = require('./xAxis')()
 var line = require('./line')()
 var legend = require('./legend')()
 var utils = require('../utils.js')
-var pie = require('./pie.js')
+// var pie = require('./pie.js')
 // var event = require('../event.js')
 
 var toString = Object.prototype.toString
@@ -375,7 +375,7 @@ module.exports = function (ctxId) {
                         break
                     case 'pie':
                         console.log('pie')
-                        pie.init(ctx, item)
+                        // pie.init(ctx, item)
                         break
                 }
             })
