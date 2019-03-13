@@ -13,10 +13,11 @@ function dataHander (data) {
 	let options = getOptions()
 	let grid = options.grid[0]
 	let width = options.grid[0].width
-	let height = options.grid[0].height
+    let height = options.grid[0].height
+    const margin = options.margin
 	// let data = options.series[0].data
-	let widthUnit = (width - grid.left - grid.right) / data.length
-	let heightUnit = (height - grid.top - grid.bottom) / (grid.range.maxRange - grid.range.minRange)
+	let widthUnit = (grid.x2 - grid.x) / data.length
+	let heightUnit = (height - grid.top - grid.bottom - margin[0] -margin[2]) / (grid.range.maxRange - grid.range.minRange)
 	let result = []
 	data.forEach(function (item, index) {
 		result.push({x: widthUnit / 2 + widthUnit * index, y: item})
@@ -27,12 +28,13 @@ function dataHander (data) {
 function dataTogrid (point) {
 	const options = getOptions()
 	const height = options.grid[0].height
-	const grid = options.grid[0]
-	const heightUnit = (height - grid.top - grid.bottom) / (grid.range.maxRange - grid.range.minRange)
+    const grid = options.grid[0]
+    const margin = options.margin
+	const heightUnit = (height - grid.top - grid.bottom - margin[0] -margin[2]) / (grid.range.maxRange - grid.range.minRange)
 	const y = (point.y - grid.range.minRange) * heightUnit
 	return {
-		x: grid.left + point.x,
-		y: grid.height - grid.bottom - y
+		x: grid.x + point.x,
+		y: grid.height - grid.bottom - y - margin[0] -margin[2]
 	}
 }
 

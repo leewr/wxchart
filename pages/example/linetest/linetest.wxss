@@ -1,0 +1,17 @@
+/* pages/example/linetest.wxss */
+@import "/utils/wxChart/common.wxss";
+.stage{
+  width: 100%;
+}
+.time{
+	font-size: 24rpx;
+	color: #666;
+	margin-left: 20rpx;
+}
+.linewrap{
+	background: #232E40
+}
+.linechart{
+	width: 100%;
+	height: 480rpx;
+}

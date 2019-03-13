@@ -3,8 +3,19 @@ module.exports = function grid () {
     return {
         init: function (ctx, options) {
             let grid = options.grid[0]
+            this._preCalc(ctx, options)
             this._drawBg(ctx, options)
             grid.show && this._draw(ctx, options)
+        },
+        _preCalc: function(ctx, options) {
+            // 内部值x\y坐标值
+            const grid = options.grid[0]
+            const margin = options.margin
+            grid.x = grid.left + margin[3]
+            grid.y = grid.top + margin[0]
+            console.log('grid', grid)
+            grid.x2 = grid.width - grid.right - margin[1]
+            grid.y2 = grid.height - grid.bottom - margin[2]
         },
         _draw: function (ctx, options) {
             ctx.beginPath()
@@ -17,11 +28,14 @@ module.exports = function grid () {
         _drawBg: function(ctx, options) {
             console.log(typeof options.grid[0].backgroundColor)
             if (typeof options.grid[0].backgroundColor === 'object') {
-                console.log('111')
+                console.log(options.grid[0])
+                const grid = options.grid[0]
                 const color = options.grid[0].backgroundColor
                 const colorStops = color.colorStops
-                const grd = ctx.createLinearGradient(0, 0, 200, 200)
+                // 背景渐变有一个默认值
+                const grd = ctx.createLinearGradient(grid.x, grid.y, grid.x2 - grid.x, grid.y2)
                 if (colorStops.length > 0) {
+                    console.log(colorStops)
                     colorStops.forEach(item => {
                         grd.addColorStop(item.offset, item.color)
                     })
@@ -33,7 +47,8 @@ module.exports = function grid () {
                     // grd.addColorStop(0.83, 'blue')
                     // grd.addColorStop(1, 'purple')
                     ctx.setFillStyle(grd)
-                    ctx.fillRect(0, 0, 150, 150)
+                    console.log(grid.x, grid.y, grid.x2, grid.y2)
+                    ctx.fillRect(grid.x, grid.y, grid.x2 -grid.x - 1, grid.y2 -1)
                 }
             }
         },
@@ -45,8 +60,10 @@ module.exports = function grid () {
          */
         _drawX: function (ctx, options) {
             ctx.setLineWidth(1)
+            ctx.setStrokeStyle('#fff')
             let grid = options.grid[0]
-            let average = Math.floor((grid.height - grid.top - grid.bottom) / grid.col)
+            let margin = options.margin[0]
+            let average = Math.floor((grid.y2 - grid.y) / grid.col)
             grid.left = options.yAxis[0].show ? grid.left : 0
             console.log('grid.left', grid.left)
             let x = {
@@ -55,7 +72,7 @@ module.exports = function grid () {
             }
             let x2 = {
                 x: grid.width -grid.right,
-                y: grid.top
+                y: grid.top + margin[0]
             }
             for (let i = 0; i < grid.col - 1; i++) {
                 x.y = x.y + average

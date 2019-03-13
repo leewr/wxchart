@@ -1,0 +1,4 @@
+<!--pages/example/linetest.wxml-->
+<view class='linewrap'>
+    <canvas canvas-id="line-chart" id="line-chart" class="linechart" width="100%" style="height: {{klineHeight}}"></canvas>
+</view>

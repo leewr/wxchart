@@ -69,7 +69,7 @@ module.exports = function (ctxId) {
             maxData: '',
             minData: '',
             drawed: false,
-            margin: [0, 12, 0, 12],
+            margin: [0, 0, 0, 0],
             theme: {
                 defaultColor: color1,
                 line: {
@@ -90,6 +90,15 @@ module.exports = function (ctxId) {
                 },
                 color: ['#1890FF', '#2FC25B', '#FACC14', '#223273', '#8543E0', '#13C2C2', '#3436C7', '#F04864'],
             },
+            title: {
+                left: 'center',
+                text: '',
+                textAlign: 'center',
+                textStyle: {
+                    color: '#FEAA0A',
+                    fontSize: 18,
+                }
+            },
             legend: {
                 show: true,
                 data: [],
@@ -108,9 +117,9 @@ module.exports = function (ctxId) {
 	            showX: true,
 	            showY: true,
 	            showEdg: true,
-	            left: 45,
-	            top: 30,
-	            right: 0,
+	            left: 40,
+	            top: 40,
+	            right: 40,
 	            bottom: 20,
                 backgroundColor: {
                     type: 'linear',
@@ -121,11 +130,11 @@ module.exports = function (ctxId) {
                     colorStops: [
                         {
                             offset: 0,
-                            color: 'red'
+                            color: 'transparent'
                         },
                         {
                             offset: 1,
-                            color: 'green'
+                            color: 'transparent'
                         }
                     ]
                 },
@@ -143,7 +152,13 @@ module.exports = function (ctxId) {
 			xAxis:
 				{
                     show: true,
-                    length: 52
+                    length: 52,
+                    lineStyle: {
+                        color: '#000'
+                    },
+                    axisTick: {
+                        show: true
+                    }
 				}
 			,
 			yAxis:
@@ -160,7 +175,7 @@ module.exports = function (ctxId) {
 					data: [],
                     show: true,
                     lineStyle: {
-                        color: 'auto',
+                        color: '#000000',
                         width: 1,
                         type: 'solid',
                         shadowBlur: 'aa'
@@ -172,7 +187,17 @@ module.exports = function (ctxId) {
                     areaStyle: {
                         origin: 'auto',
                         opacity: 0,
-                        color: 'auto'
+                        color: { // 可接受对象或者字符串
+                            type: 'linear',
+                            x: 0.5,
+                            y: 0.5,
+                            r: 0.5,
+                            colorStops: [{
+                                offset: 0, color: 'red' // 0% 处的颜色
+                            }, {
+                                offset: 1, color: 'blue' // 100% 处的颜色
+                            }],
+                        }
                     }
 				}
 		},
@@ -188,7 +213,7 @@ module.exports = function (ctxId) {
          * @param  {[type]} userOptions [description]
          * @return {[type]}             [description]
          */
-        initOptions: function (userOptions, defaultOptions) {
+        initOptions: function (userOptions, defaultOptions , callback) {
             var that = this
             let result = {}
             for (let i in defaultOptions) {
@@ -213,20 +238,33 @@ module.exports = function (ctxId) {
 
             result['ctx'] = result['ctx'][0]
             // 处理canvas宽度
-            if(result.grid[0].width === 'auto' || result.grid[0].width === '100%') {
-                wx.getSystemInfo({
-                    success: function (res) {
-                        if (result.margin) {
-                            result.grid[0].width = result.grid[0].width = that.canvasWidth = res.windowWidth - result.margin[1] - result.margin[3]
-                        } else {
-                            result.grid[0].width = that.canvasWidth = result.windowWidth;
-                        }
-                    }
-                });
-            }
-            this.defaultOptions = result
-            utils.init(result)
-            return result
+            // 采用新增加的接口
+            console.log(result['ctx'])
+            wx.createSelectorQuery().select('#line-chart').boundingClientRect(function (rect) {
+                console.log('rect', rect)
+                this.defaultOptions = result
+                result.grid[0].width = rect.width
+                utils.init(result)
+                callback(result)
+              }).exec()
+            // if(result.grid[0].width === 'auto' || result.grid[0].width === '100%') {
+            //     wx.getSystemInfo({
+            //         success: function (res) {
+            //             console.log(res)
+            //             if (result.margin) {
+            //                 console.log(1111)
+            //                 result.grid[0].width = result.grid[0].width = that.canvasWidth = res.windowWidth - result.margin[1] - result.margin[3]
+            //             } else {
+            //                 console.log(12222)
+            //                 result.grid[0].width = that.canvasWidth = result.windowWidth;
+            //             }
+            //             console.log(result.grid[0].width)
+            //         }
+            //     });
+            // }
+            // this.defaultOptions = result
+            // utils.init(result)
+            // return result
         },
 		_cover: function( options, defaults ){
             var that = this
@@ -278,13 +316,16 @@ module.exports = function (ctxId) {
 		},
 		setOption: function (options) {
             this.setOptioned = true
-            let coverOptions = this.initOptions(options, this.defaultOptions)
+            let coverOptions = this.initOptions(options, this.defaultOptions, (res) => {
+                let ctx = this.defaultOptions.ctx
+                this.draw(ctx, res)
+            })
 			// let coverOptions = this._cover(options, this.defaultOptions)
-            let ctx = this.defaultOptions.ctx
-            // let golbData = this.dataInit(ctx, coverOptions, this.callback())
-            // coverOptions.maxData = golbData.maxData
-            // coverOptions.minData = golbData.minData
-			this.draw(ctx, coverOptions)
+            // let ctx = this.defaultOptions.ctx
+            // // let golbData = this.dataInit(ctx, coverOptions, this.callback())
+            // // coverOptions.maxData = golbData.maxData
+            // // coverOptions.minData = golbData.minData
+			// this.draw(ctx, coverOptions)
 		},
         dataInit: function (ctx, options, callback) {
             let that = this
@@ -378,21 +419,21 @@ module.exports = function (ctxId) {
             let series = options.series
             this.drawed = false
             grid.init(ctx, options)
-            // xAxis.init(ctx, options)
-            // legend.init(ctx, options)
-            // common.drawLine(options)
+            xAxis.init(ctx, options)
+            legend.init(ctx, options)
+            common.drawLine(options)
             
-            // series.forEach(function (item, index) {
-            //     console.log(item.type)
-            //     switch (item.type) {
-            //         case 'line':
-            //             line.init(ctx, item, index, options)
-            //             break
-            //         case 'pie':
-            //             console.log('pie')
-            //             break
-            //     }
-            // })
+            series.forEach(function (item, index) {
+                console.log(item.type)
+                switch (item.type) {
+                    case 'line':
+                        line.init(ctx, item, index, options)
+                        break
+                    case 'pie':
+                        console.log('pie')
+                        break
+                }
+            })
             
             ctx.draw()
             ctx.save()

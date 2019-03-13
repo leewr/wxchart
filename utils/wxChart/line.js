@@ -42,7 +42,6 @@ module.exports = function line () {
 				if (n === data.length - 1) {
 					// 包裹区域
 					// 绘制层级问题
-				 	
 				}
 			})
 
@@ -50,14 +49,27 @@ module.exports = function line () {
 
 		 	// 背景区域
 		 	if (item.areaStyle.opacity) {
-		 		let color = utils.hexToRgb(item.areaStyle.color === 'auto' ? theme.color[index] : item.areaStyle.color)
-		 		color = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',' + '0.5)'
+		 		// let color = utils.hexToRgb(item.areaStyle.color === 'auto' ? theme.color[index] : item.areaStyle.color)
+		 		// color = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',' + '0.5)'
 				ctx.lineTo(pointLast.x, grid.height - grid.bottom - 1)
-				ctx.lineTo(grid.left, grid.height - grid.bottom - 1)
+				ctx.lineTo(grid.x, grid.height - grid.bottom - 1)
 				ctx.lineTo(point0.x, point0.y)
-				ctx.fillStyle = color
+				// ctx.fillStyle = color
+				// Create linear gradient
+				console.log('bgDraw')
+				const color = item.areaStyle.color
+				const colorStops = color.colorStops
+				console.log(colorStops)
+				ctx.setGlobalAlpha(item.areaStyle.opacity)
+				const grd = ctx.createLinearGradient(0, 0, 0, grid.height)
+				colorStops.forEach(item => {
+					grd.addColorStop(item.offset, item.color)
+				})
+				
+				ctx.setFillStyle(grd)
 				ctx.closePath()
 				ctx.fill()
+				ctx.setGlobalAlpha(1)
 			}
 
 		 	ctx.strokeStyle="#fff"

@@ -53,5 +53,6 @@ export function findRange (num, type, limit) {
 			num--
 		}
 	}
+	console.log('num', num, multiple, num / multiple)
 	return num / multiple
 }
