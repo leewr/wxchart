@@ -24,6 +24,7 @@ module.exports = function Axis () {
 			let grid = options.grid[0]
 			let xAxis = options.xAxis[0]
 			let dataLength = xAxis.data.length
+			if (dataLength <= 0) return;
 			let average = (grid.x2 - grid.x) / dataLength
 			let margin = options.margin[0]
 			// 坐标横线
@@ -39,21 +40,26 @@ module.exports = function Axis () {
 			// 坐标下引线
 			let a = {
 				x: grid.x2,
-				y: grid.height - grid.bottom - margin[2]
+				y: grid.y2
 			}
-			ctx.setFillStyle(xAxis.lineStyle.color)
+			let dataXrange = []
 			for (let i = 0; i <= dataLength; i++) {
 				let l = a.x
-				// if (xAxis.axisTick.show) {
+				dataXrange.push(a.x)
+				if (xAxis.axisTick.show) {
+					ctx.setFillStyle(xAxis.lineStyle.color)
 					ctx.moveTo(a.x, a.y)
 					ctx.lineTo(a.x, a.y + 3)
-				// }
+				}
 				a.x -= average
 				if (i < dataLength) {
+					ctx.setFillStyle(xAxis.textStyle.color)
 					console.log(xAxis.data[dataLength - i - 1])
-					ctx.fillText(xAxis.data[dataLength - i - 1], (l + a.x) /2 , a.y + 16)
+					ctx.fillText(xAxis.data[dataLength - i - 1], (l + a.x) /2 , a.y + 20)
 				}
 			}
+			xAxis.dataXrange = dataXrange.reverse()
+			console.log('dataXrange', xAxis.dataXrange)
 		},
 		_drawYline: function (ctx, options) {
 			let grid = options.grid[0]
@@ -102,6 +108,7 @@ module.exports = function Axis () {
 					data.push(item['data'])
 				})
 			}
+			console.log('data.length', data)
 			let maxDataArr = [],
 				minDataArr = []
 			data.forEach((item, index) => {
@@ -110,10 +117,8 @@ module.exports = function Axis () {
 				maxDataArr.push(max)
 				minDataArr.push(min)
 			})
-			
 			let range = calcRange(Math.max.apply(null, maxDataArr), 0)
 			grid.range = range
-			grid.left = grid.show ? grid.left : options.margin[3]
 		}
 	}
 }

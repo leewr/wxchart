@@ -1,11 +1,12 @@
-var common = require('./common');
+var common = require('./common')
+var chartEvent = require('./event')
 var grid = require('./grid')()
 var xAxis = require('./xAxis')()
 var line = require('./line')()
 var legend = require('./legend')()
 var utils = require('../utils.js')
 // var pie = require('./pie.js')
-// var event = require('../event.js')
+
 
 var toString = Object.prototype.toString
 var isObject = function (val) {
@@ -96,7 +97,7 @@ module.exports = function (ctxId) {
                 textAlign: 'center',
                 textStyle: {
                     color: '#FEAA0A',
-                    fontSize: 18,
+                    fontSize: 16,
                 }
             },
             legend: {
@@ -154,7 +155,7 @@ module.exports = function (ctxId) {
                     show: true,
                     length: 52,
                     lineStyle: {
-                        color: '#000'
+                        color: '#333'
                     },
                     axisTick: {
                         show: true
@@ -182,7 +183,11 @@ module.exports = function (ctxId) {
                     },
                     smooth: false,
                     itemStyle: {
-                        opacity: 1
+                        opacity: 1,
+                        color: '#333',
+                        highlight: {
+                            color: '#000'
+                        }
                     },
                     areaStyle: {
                         origin: 'auto',
@@ -244,6 +249,7 @@ module.exports = function (ctxId) {
                 console.log('rect', rect)
                 this.defaultOptions = result
                 result.grid[0].width = rect.width
+                result.grid[0].height = rect.height
                 utils.init(result)
                 callback(result)
               }).exec()
@@ -416,12 +422,14 @@ module.exports = function (ctxId) {
             return gridData */
         },
 		draw: function (ctx, options) {
+            console.log('options', options)
             let series = options.series
             this.drawed = false
             grid.init(ctx, options)
             xAxis.init(ctx, options)
             legend.init(ctx, options)
-            common.drawLine(options)
+            console.log('options', options)
+            // common.drawLine(options)
             
             series.forEach(function (item, index) {
                 console.log(item.type)
@@ -440,12 +448,21 @@ module.exports = function (ctxId) {
             this.drawed = true
 		},
         // 提供chart事件的支持
-        on: function(type, params, callback) {
+        on: function(type, event, callback) {
             var that = this
-            var ctx = this.defaultOptions.ctx
-            // 参数处理
-            // lastDistance = params.touches[0]
-            console.log(params)
+            var ctx = this.defaultOptions
+            console.log(type)
+            console.log(event)
+            switch(type) {
+                case 'highlight': {
+                    console.log('highlight')
+                    chartEvent.highlight.call(this, event, ctx)
+                    break
+                }
+                default: {
+                    console.log(1)
+                }
+            }
             // ctx.restore()
             // ctx.translate(20, 20)
             // this.draw(ctx, this.defaultOptions)

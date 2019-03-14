@@ -32,6 +32,7 @@ export function calcRange (max, min) {
 }
 
 export function findRange (num, type, limit) {
+	if (num === Infinity || num === -Infinity ) return 0
 	if (isNaN(num)) {
 		throw new Error('unvalid series data!')
 	}
@@ -46,6 +47,7 @@ export function findRange (num, type, limit) {
 	} else {
 		num = Math.floor(num * multiple)
 	}
+	console.log(num)
 	while (num % limit !== 0) {
 		if (type === 'upper') {
 			num++

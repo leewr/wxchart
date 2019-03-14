@@ -10,6 +10,7 @@ function getOptions () {
 * 已处理以grid为坐标轴
  */
 function dataHander (data) {
+    if (data.length === 0) return
 	let options = getOptions()
 	let grid = options.grid[0]
 	let width = options.grid[0].width
@@ -34,7 +35,7 @@ function dataTogrid (point) {
 	const y = (point.y - grid.range.minRange) * heightUnit
 	return {
 		x: grid.x + point.x,
-		y: grid.height - grid.bottom - y - margin[0] -margin[2]
+		y: grid.height -  grid.bottom - y - margin[2]
 	}
 }
 
@@ -74,6 +75,21 @@ function hexToRgb(hex) {
         g: parseInt(result[2], 16),        
         b: parseInt(result[3], 16)    
     } : null;
+}
+
+/**
+ * 是否在目标范围之内
+ */
+function isInReact(point, pointRange) {
+    if (
+        point.x > pointRange.x[0] && 
+        point.x < pointRange.x[1] &&
+        point.y >pointRange.y[0] &&
+        point.y < pointRange.y[1]
+    ) {
+        return true
+    }
+    return false
 }
  
 module.exports = {

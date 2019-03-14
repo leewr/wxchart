@@ -1,5 +1,6 @@
 // pages/example/linetest.js
-var wxChart = require('../../../utils/wxChart/kline');
+const wxChart = require('../../../utils/wxChart/kline');
+let lineChart3
 Page({
 
   /**
@@ -71,12 +72,19 @@ Page({
       title: {
           aligin: 'center',
           text: '近6个月收益',
+          fontSize: '16'
       },
       xAxis: {
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月'],
           axisTick: {
             show: false
+          },
+          lineStyle: {
+            color: '#232E40'
+          },
+          textStyle: {
+            color: '#8C939D'
           }
       },
       grid: {
@@ -103,7 +111,7 @@ Page({
       },
       series: [
         {
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            data: [333, 932, 901, 600, 1210, 800, 400],
             type: 'line',
             smooth: false,
             areaStyle: {
@@ -113,11 +121,26 @@ Page({
                   offset: 0, color: '#fff',
                 }, {offset: 1, color: '#232E40'}]
               }
+            },
+            itemStyle: {
+              color: '#8C939D',
+              highlight: {
+                color: '#FEAA0A'
+              }
+            },
+            lineStyle: {
+              width: 0
             }
         }
       ]
     }
-    let lineChart3 = wxChart('line-chart').init()
+    lineChart3 = wxChart('line-chart').init()
     lineChart3.setOption(option3)
+  },
+  touchStart: function(event) {
+    console.log(event)
+    lineChart3.on('highlight', event, (res) => {
+      console.log('highlight')
+    })
   }
 })

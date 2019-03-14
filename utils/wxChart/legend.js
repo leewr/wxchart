@@ -13,7 +13,7 @@ module.exports = function legend () {
 			let dataLegend = legend.data.length ? legend.data: []
 			if (dataLegend.length) {
 				let that = this
-				ctx.setTextAlign('left')
+				// ctx.setTextAlign('left')
 				console.log('legend')
 				let x = legend.left + 2
 				let r = options.grid[0].width - legend.right - 2
@@ -45,12 +45,15 @@ module.exports = function legend () {
 		_drawTitle (ctx, options) {
 			const title = options.title[0]
 			console.log(title)
-			let x = options.grid[0].width / 2
+			const width = options.grid[0].width / 2
 			const metrics = ctx.measureText(title.text)
+			console.log(width, metrics)
+			const x = width
 			ctx.beginPath()
+			ctx.setTextAlign('center')
 			ctx.setFillStyle(title.textStyle.color)
 			ctx.setFontSize(title.textStyle.fontSize)
-			ctx.fillText(title.text, x, (options.grid[0].top + options.margin[0]) / 2)
+			ctx.fillText(title.text, x, (options.grid[0].top + options.margin[0]) / 2 + title.textStyle.fontSize /2 )
 			ctx.fill()
 		}
 	}
