@@ -122,6 +122,14 @@ function userMerge (/* obj1, obj2, obj3, ... */) {
     return result
 }
 
+/*
+* 简易的对象clone
+*/
+function deepClone (obj) {
+    const cloneObj = JSON.stringify(obj)
+    return JSON.parse(cloneObj)
+}
+
 /**
  * 是否在目标范围之内
  */
@@ -147,5 +155,6 @@ module.exports = {
     isObject,
     isArray,
     forEach,
-    userMerge
+    userMerge,
+    deepClone
 }

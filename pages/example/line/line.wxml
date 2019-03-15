@@ -1,10 +1,10 @@
 <!--pages/example/line/line.wxml-->
 <view class='wrap'>
   <view class='title'>基础折线图（带点）<text class="time">渲染时间：{{renderTime}} ms</text></view>
-  <canvas canvas-id="line-chart" class="stage" width="100%" height="{{klineHeight}}" bindtouchstart="touchStart" bindtouchmove="touchStart"></canvas>
+  <canvas canvas-id="line-chart" id="line-chart" class="stage" width="100%" height="{{klineHeight}}" bindtouchstart="touchStart" bindtouchmove="touchStart"></canvas>
   <view class="title">曲线折线图（带点）<text class="time">渲染时间：{{renderTime2}} ms</text></view>
-  <canvas canvas-id="line-chart2" class="stage" width="100%" height="{{klineHeight}}"></canvas>
+  <canvas canvas-id="line-chart2" id="line-chart2" class="stage" width="100%" height="{{klineHeight}}"></canvas>
   <view class="title">折线图堆叠<text class="time">渲染时间：{{renderTime3}} ms</text></view>
-  <canvas canvas-id="line-chart3" class="stage" width="100%" height="{{klineHeight}}"></canvas>
+  <canvas canvas-id="line-chart3" id="line-chart3" class="stage" width="100%" height="{{klineHeight}}"></canvas>
 </view>
 

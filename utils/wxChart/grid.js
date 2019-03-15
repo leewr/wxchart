@@ -18,7 +18,7 @@ export default {
     },
     _draw: function (ctx, options) {
         ctx.beginPath()
-        ctx.setLineWidth(options.grid[0].borderWidth)
+        ctx.lineWidth = options.grid[0].borderWidth
         ctx.setStrokeStyle(options.grid[0].borderColor)
         this._drawX(ctx, options)
         this._drawY(ctx, options)
@@ -37,7 +37,6 @@ export default {
                     grd.addColorStop(item.offset, item.color)
                 })
                 ctx.setFillStyle(grd)
-                console.log('grid bg')
                 ctx.fillRect(grid.x, grid.y, grid.x2 -grid.x - 1, grid.y2 - grid.y -1)
             }
         }
@@ -49,10 +48,9 @@ export default {
      * @return {[type]}         [description]
      */
     _drawX: function (ctx, options) {
-        ctx.setLineWidth(1)
-        ctx.setStrokeStyle('#fff')
+        ctx.lineWidth = 1
         let grid = options.grid[0]
-        let margin = options.margin[0]
+        let margin = options.margin
         let average = Math.floor((grid.y2 - grid.y) / grid.col)
         let x = {
             x: grid.left,
@@ -62,6 +60,7 @@ export default {
             x: grid.width -grid.right,
             y: grid.top + margin[0]
         }
+        console.log(grid.top, margin[0], margin[0] + grid.top)
         for (let i = 0; i < grid.col - 1; i++) {
             x.y = x.y + average
             x2.y = x2.y + average

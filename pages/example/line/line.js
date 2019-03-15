@@ -138,17 +138,14 @@ Page({
         {
             data: [4201, 5321, 6021, 7234, 2290, 8301, 1220],
             type: 'line',
-            smooth: false,
-            areaStyle: {
-              opacity: 1
-            }
+            smooth: false
         },
         {
             data: [8220, 9322, 9012, 9342, 12290, 12330, 13220],
             type: 'line',
             smooth: false,
             areaStyle: {
-              opacity: 1
+              opacity: 0
             }
         }
       ]

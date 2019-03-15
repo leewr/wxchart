@@ -36,7 +36,7 @@ module.exports = {
         }
         point = this._dataTogrid(data, option, dataStartIndex, dataEndIndex)
 
-        ctx.setLineWidth(series.lineStyle.width)
+        ctx.lineWidth = series.lineStyle.width
         ctx.setStrokeStyle(series.lineStyle.color)
         ctx.beginPath()
         // console.log(data.length - 1)
@@ -248,7 +248,7 @@ module.exports = {
             ctx.setFillStyle(color);
             ctx.fillRect(cx, cy, w, h);
         }else{
-            ctx.setLineWidth(2);
+            ctx.lineWidth = 2
             ctx.setStrokeStyle(color);
             ctx.strokeRect(cx, cy, w, h);
             ctx.setFillStyle('white');
@@ -278,7 +278,7 @@ module.exports = {
                 ctx.setFillStyle(color);
                 ctx.fillRect(cx + ds, c + 1, w - ds, 1);
             }else{
-                ctx.setLineWidth(1);
+                ctx.lineWidth = 1;
                 ctx.setStrokeStyle(color);
                 ctx.strokeRect(cx + ds + 1, c + 1, w - ds - 1, barH - 1);
                 ctx.setFillStyle('#ffffff');
@@ -341,7 +341,7 @@ module.exports = {
         ctx.beginPath()
         ctx.setFillStyle(color)
         ctx.setStrokeStyle(color)
-        ctx.setLineWidth(1)
+        ctx.lineWidth = 1
         ctx.moveTo(x, h)
         ctx.lineTo(x, c)
         ctx.moveTo(x, o)

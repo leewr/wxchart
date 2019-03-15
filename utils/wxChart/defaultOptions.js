@@ -47,7 +47,7 @@ export default  {
         align: 'left'
     },
     grid: {
-        show: false,
+        show: true,
         width: 'auto',
         height: 150,
         row: 4,
@@ -96,6 +96,9 @@ export default  {
             },
             axisTick: {
                 show: true
+            },
+            textStyle: {
+                color: '#333'
             }
         }
     ,
@@ -142,3 +145,4 @@ export default  {
         }
     }
 }
+

@@ -32,8 +32,8 @@ export default {
 		ctx.setTextAlign('center')
 		ctx.setFontSize('12')
 		console.log(grid)
-		ctx.moveTo(grid.x, grid.height - grid.top - options.margin[0])
-		ctx.lineTo(grid.x2, grid.height - grid.top - options.margin[0])
+		ctx.moveTo(grid.x, grid.y2)
+		ctx.lineTo(grid.x2, grid.y2)
 		console.log('drawx')
 
 		// 坐标下引线
@@ -82,8 +82,8 @@ export default {
 		ctx.setTextAlign('right')
 		ctx.setTextBaseline('middle')
 		console.log('grid.left', grid.left)
-		ctx.moveTo(grid.x, grid.top + margin[0])
-		ctx.lineTo(grid.x, grid.height - grid.bottom - margin[2])
+		ctx.moveTo(grid.x, grid.y)
+		ctx.lineTo(grid.x, grid.y2)
 		let a = {
 			x: grid.x,
 			y: grid.top + margin[0]

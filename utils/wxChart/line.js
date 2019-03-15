@@ -35,7 +35,7 @@ export default {
 		}
 
 		let data = utils.dataHander(item.data, options)
-		ctx.setLineWidth = item.lineStyle.width
+		ctx.lineWidth  = item.lineStyle.width
 		let point0 = utils.dataTogrid(data[0])
 		let pointLast = utils.dataTogrid(data[data.length - 1])
 		data.forEach(function (i, n) {
@@ -43,13 +43,14 @@ export default {
 			if (n === 0) {
 				ctx.moveTo(point.x, point.y)
 			}
-			if (i.smooth) {
-				if (index > 0) {
+			if (series.smooth) {
+				console.log('smooth', series.smooth, index)
+				// if (index > 0) {
 					let bezierPoint = Smooth.smooth(data, n - 1)
 					const pointA = utils.dataTogrid(bezierPoint.pA)
 					const pointB = utils.dataTogrid(bezierPoint.pB)
 					ctx.bezierCurveTo(pointA.x, pointA.y, pointB.x, pointB.y, point.x, point.y)
-				}
+				// }
 			} else {
 				ctx.lineTo(point.x, point.y)
 			}

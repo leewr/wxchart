@@ -8,6 +8,7 @@ import utils from './utils.js'
 
 module.exports = function (ctxId) {
     console.log(defaultOptions)
+    const obj = utils.deepClone(defaultOptions)
 	return {
         setOptioned: false,
         drawIndex: 0,
@@ -15,7 +16,7 @@ module.exports = function (ctxId) {
             x: 0,
             y: 0
         },
-		defaultOptions,
+		defaultOptions: obj,
 		init: function () {
 			this.defaultOptions.ctx = wx.createCanvasContext(ctxId)
 			return this
@@ -74,7 +75,6 @@ module.exports = function (ctxId) {
             grid.init(ctx, options)
             xAxis.init(ctx, options)
             legend.init(ctx, options)
-            // common.drawLine(options)
             
             series.forEach(function (item, index) {
                 console.log(item.type)
