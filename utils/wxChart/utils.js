@@ -9,9 +9,9 @@ function getOptions () {
 /*
 * 已处理以grid为坐标轴
  */
-function dataHander (data) {
+function dataHander (data, options) {
+    console.log('dataHander', options)
     if (data.length === 0) return
-	let options = getOptions()
 	let grid = options.grid[0]
 	let width = options.grid[0].width
     let height = options.grid[0].height
@@ -77,6 +77,51 @@ function hexToRgb(hex) {
     } : null;
 }
 
+var toString = Object.prototype.toString
+var isObject = function (val) {
+    return val !== null && typeof val === 'object'
+}
+var isArray = function (val) {
+    return toString.call(val) === '[object Array]'
+}
+
+function forEach (obj, fn) {
+    if (obj === null || typeof obj === 'undefined') return
+
+    if (typeof obj !== 'object') obj = [obj]
+
+    if (isArray(obj)) {
+        for (let i = 0, l = obj.length; i < l; i++) {
+            fn.call(null, obj[i], i, obj)
+        }
+    } else {
+        for (let key in obj) {
+            if (Object.prototype.hasOwnProperty.call(obj, key)) {
+                fn.call(null, obj[key], key, obj)
+            }
+        }
+    }
+}
+
+function userMerge (/* obj1, obj2, obj3, ... */) {
+    let result = {}
+    function assignValue(val, key) {
+        if (typeof result[key] === 'object' && typeof val === 'object' && !isArray(val)) {
+            result[key] = userMerge(result[key], val)
+        } else if (typeof val === 'object' && !isArray(val)) {
+            result[key] = userMerge({}, val)
+        }else {
+            if (result[key] === undefined) {
+                result[key] = val
+            }
+        }
+    }
+    for (let i = 0, l = arguments.length; i < l; i++) {
+        forEach(arguments[i], assignValue)
+    }
+    return result
+}
+
 /**
  * 是否在目标范围之内
  */
@@ -98,5 +143,9 @@ module.exports = {
 	dataHander,
 	dataTogrid,
 	measureText,
-	hexToRgb
+    hexToRgb,
+    isObject,
+    isArray,
+    forEach,
+    userMerge
 }

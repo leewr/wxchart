@@ -138,7 +138,6 @@ Page({
     lineChart3.setOption(option3)
   },
   touchStart: function(event) {
-    console.log(event)
     lineChart3.on('highlight', event, (res) => {
       console.log('highlight')
     })
