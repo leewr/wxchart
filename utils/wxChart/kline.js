@@ -94,11 +94,11 @@ module.exports = function (ctxId) {
 		},
         // 提供chart事件的支持
         on: function(type, event, callback) {
-            var ctx = this.defaultOptions
+            // var options = this.defaultOptions
             switch(type) {
                 case 'highlight': {
                     console.log('highlight')
-                    chartEvent.highlight.call(this, event, ctx)
+                    chartEvent.highlight.call(this, event, callback)
                     break
                 }
                 default: {

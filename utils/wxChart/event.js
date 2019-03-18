@@ -1,7 +1,7 @@
 import utils from './utils'
 
 export default {
-	highlight: function(event) {
+	highlight: function(event, callback) {
 		const options = utils.getOptions()
 		const ctx = options.ctx
 		const x = event.touches[0].x
@@ -14,5 +14,6 @@ export default {
 		}
 		options.xAxis[0].highlightIndex = curIndex
 		this.draw(ctx, options)
+		callback(curIndex)
 	}
 }

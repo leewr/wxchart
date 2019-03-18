@@ -139,7 +139,7 @@ Page({
   },
   touchStart: function(event) {
     lineChart3.on('highlight', event, (res) => {
-      console.log('highlight')
+      console.log('callback highlight', res)
     })
   }
 })
