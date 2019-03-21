@@ -1,6 +1,7 @@
 // pages/example/line/line.js
 var wxChart = require('../../../utils/wxChart/kline');
 let lineChart
+let lineChart4
 Page({
 
   /**
@@ -113,9 +114,17 @@ Page({
             name: 'Women',
             data: [820, 932, 901, 934, 1290, 1330, 1320],
             type: 'line',
-            smooth: true,
+            smooth: false,
             itemStyle: {
               opacity: 1
+            },
+            areaStyle: {
+              opacity: 0.2,
+              color: {
+                colorStops: [{
+                  offset: 0, color: '#fff',
+                }, {offset: 1, color: '#232E40'}]
+              }
             }
         }
     }
@@ -152,6 +161,77 @@ Page({
     }
     let lineChart3 = wxChart('line-chart3').init()
     lineChart3.setOption(option3)
+
+    let option4 = {
+      name: 2,
+      margin: [20, 20, 20, 20],
+      title: {
+          aligin: 'center',
+          text: '近6个月收益',
+          fontSize: '16'
+      },
+      xAxis: {
+          type: 'category',
+          data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月'],
+          axisTick: {
+            show: false
+          },
+          lineStyle: {
+            color: '#232E40'
+          },
+          textStyle: {
+            color: '#8C939D'
+          }
+      },
+      grid: {
+        show:  false,
+        height: 240,
+        left: 0,
+        right: 0,
+        top: 20,
+        backgroundColor: {
+          x: 0,
+          y: 0,
+          x2: 100,
+          y2: 100,
+          colorStops: [{
+              offset: 0, color: '#394353' // 0% 处的颜色
+          }, {
+              offset: 0.5, color: '#394353' // 100% 处的颜色
+          }],
+        }
+      },
+      yAxis: {
+          type: 'value',
+          show:  false
+      },
+      series: [
+        {
+            data: [333, 932, 901, 600, 1210, 800, 400],
+            type: 'line',
+            smooth: false,
+            areaStyle: {
+              opacity: 0.2,
+              color: {
+                colorStops: [{
+                  offset: 0, color: '#fff',
+                }, {offset: 1, color: '#232E40'}]
+              }
+            },
+            itemStyle: {
+              color: '#8C939D',
+              highlight: {
+                color: '#FEAA0A'
+              }
+            },
+            lineStyle: {
+              width: 0
+            }
+        }
+      ]
+    }
+    lineChart4 = wxChart('line-chart4').init()
+    lineChart4.setOption(option4)
   },
   touchStart: function (event) {
     // console.log(event)
@@ -162,6 +242,11 @@ Page({
   touchMove: function (event) {
     lineChart.on(event.type, event, function (e) {
       // console.log(e)
+    })
+  },
+  touchStart: function(event) {
+    lineChart4.on('highlight', event, (res) => {
+      console.log('callback highlight', res)
     })
   }
 })

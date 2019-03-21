@@ -8,3 +8,11 @@
 	color: #666;
 	margin-left: 20rpx;
 }
+
+.linewrap{
+	background: #232E40
+}
+.linechart{
+	width: 100%;
+	height: 480rpx;
+}
