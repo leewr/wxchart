@@ -9,12 +9,15 @@ export function datayAxisHandle (series, options) {
 export function calcRange (max, min) {
 	let limit = 0
 	let range = max - min
+	if (range >= 20000) {
+		limit = 20000
+	}
 	if (range >= 10000) {
-		limit = 1000
+		limit = 10000
 	} else if (range >= 1000) {
-		limit = 100
+		limit = 1000
 	} else if ( range >= 100) {
-		limit = 10
+		limit = 100
 	} else if (range >= 10) {
 		limit = 5
 	} else if (range >=1) {
@@ -32,6 +35,7 @@ export function calcRange (max, min) {
 }
 
 export function findRange (num, type, limit) {
+	console.log('limit', limit)
 	if (num === Infinity || num === -Infinity ) return 0
 	if (isNaN(num)) {
 		throw new Error('unvalid series data!')
@@ -47,7 +51,7 @@ export function findRange (num, type, limit) {
 	} else {
 		num = Math.floor(num * multiple)
 	}
-	console.log(num)
+	console.log('num', num)
 	while (num % limit !== 0) {
 		if (type === 'upper') {
 			num++

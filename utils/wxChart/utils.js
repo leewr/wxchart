@@ -10,7 +10,6 @@ function getOptions () {
 * 已处理以grid为坐标轴
  */
 function dataHander (data, options) {
-    console.log('dataHander', options)
     if (data.length === 0) return
 	let grid = options.grid[0]
 	let width = options.grid[0].width
@@ -22,7 +21,7 @@ function dataHander (data, options) {
 	let result = []
 	data.forEach(function (item, index) {
 		result.push({x: widthUnit / 2 + widthUnit * index, y: item})
-	})
+    })
 	return result
 }
 
@@ -31,7 +30,14 @@ function dataTogrid (point) {
 	const height = options.grid[0].height
     const grid = options.grid[0]
     const margin = options.margin
-	const heightUnit = (height - grid.top - grid.bottom - margin[0] -margin[2]) / (grid.range.maxRange - grid.range.minRange)
+    
+    let heightUnit = 0
+    if ((grid.range.maxRange - grid.range.minRange) !== 0) {
+        heightUnit = (height - grid.top - grid.bottom - margin[0] -margin[2]) / (grid.range.maxRange - grid.range.minRange)
+    } else {
+        heightUnit = 1
+    }
+    
 	const y = (point.y - grid.range.minRange) * heightUnit
 	return {
 		x: grid.x + point.x,
