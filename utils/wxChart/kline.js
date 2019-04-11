@@ -101,6 +101,10 @@ module.exports = function (ctxId) {
                     chartEvent.highlight.call(this, event, callback)
                     break
                 }
+                case 'move': {
+                    console.log('move')
+                    chartEvent.move.call(this, event, callback)
+                }
                 default: {
                     console.log(1)
                 }

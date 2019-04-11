@@ -15,5 +15,15 @@ export default {
 		options.xAxis[0].highlightIndex = curIndex
 		this.draw(ctx, options)
 		callback(curIndex)
+	},
+	touchStart: function (event, callback) {
+		console.log(event)
+	},
+	touchMove: function (event, callback) {
+		console.log(event)
+	},
+	touchEnd: function (event, callback) {
+		console.log('end')
+		console.log(event)
 	}
 }
