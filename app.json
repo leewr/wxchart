@@ -5,7 +5,8 @@
     "pages/example/line/line",
     "pages/example/legend/legend",
     "pages/example/pie/pie",
-    "pages/example/linetest/linetest"
+    "pages/example/linetest/linetest",
+    "pages/example/zoomdata/zoomdata"
   ],
   "window": {
     "navigationBarTextStyle": "white",

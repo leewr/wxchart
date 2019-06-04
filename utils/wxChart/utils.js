@@ -11,12 +11,13 @@ function getOptions () {
  */
 function dataHander (data, options) {
     if (data.length === 0) return
+    let dataLength = data.length > options.dataZoom[0].endValue ? options.dataZoom[0].endValue : data.length
 	let grid = options.grid[0]
 	let width = options.grid[0].width
     let height = options.grid[0].height
     const margin = options.margin
 	// let data = options.series[0].data
-	let widthUnit = (grid.x2 - grid.x) / data.length
+	let widthUnit = (grid.x2 - grid.x) / dataLength
 	let heightUnit = (height - grid.top - grid.bottom - margin[0] -margin[2]) / (grid.range.maxRange - grid.range.minRange)
 	let result = []
 	data.forEach(function (item, index) {

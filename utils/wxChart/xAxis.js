@@ -15,15 +15,16 @@ export default {
 	},
 	_drawYAxis: function (ctx, options) {
 		this._ylineCalc(ctx, options)
-		console.log('options.yAxis.show', options.yAxis[0].show)
 		options.yAxis[0].show && this._drawYline(ctx, options)
 	},
 	_drawXline: function (ctx, options) {
 		// XAxis 只允许底部一个轴
 		let grid = options.grid[0]
 		let xAxis = options.xAxis[0]
-		let dataLength = xAxis.data.length
+		let dataLength
 		if (dataLength <= 0) return;
+		dataLength = xAxis.data.length > options.dataZoom[0].endValue ? options.dataZoom[0].endValue : xAxis.data.length
+		console.log('dataLength', dataLength)
 		let average = (grid.x2 - grid.x) / dataLength
 		let margin = options.margin[0]
 		// 坐标横线
@@ -53,7 +54,6 @@ export default {
 			a.x -= average
 			if (i < dataLength) {
 				ctx.setFillStyle(xAxis.textStyle.color)
-				console.log(xAxis.data[dataLength - i - 1])
 				ctx.fillText(xAxis.data[dataLength - i - 1], (l + a.x) /2 , a.y + 20)
 			}
 		}

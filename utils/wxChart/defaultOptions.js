@@ -84,7 +84,8 @@ export default  {
     dataZoom: 
         {
             start: 0,
-            end: 1
+            startValue: 0,
+            endValue: 10
         }
     ,
     xAxis:

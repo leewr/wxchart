@@ -37,7 +37,14 @@ export default {
 		let data = utils.dataHander(item.data, options)
 		ctx.lineWidth  = item.lineStyle.width
 		let point0 = utils.dataTogrid(data[0])
-		let pointLast = utils.dataTogrid(data[data.length - 1])
+		console.log('zoomData', options)
+		// todo 数据长度转换
+		if (options.dataZoom[0].end) {
+
+		}
+		let dataLength = data.length > options.dataZoom[0].endValue ? options.dataZoom[0].endValue : data.length
+		let pointLast = utils.dataTogrid(data[dataLength - 1])
+
 		data.forEach(function (i, n) {
 			let point = utils.dataTogrid(i)
 			if (n === 0) {
@@ -52,7 +59,10 @@ export default {
 					ctx.bezierCurveTo(pointA.x, pointA.y, pointB.x, pointB.y, point.x, point.y)
 				// }
 			} else {
-				ctx.lineTo(point.x, point.y)
+				// 数据长度控制
+				if (n < dataLength) {
+					ctx.lineTo(point.x, point.y)
+				}
 			}
 
 			if (n === data.length - 1) {
@@ -97,7 +107,8 @@ export default {
 			ctx.setStrokeStyle(item.itemStyle.color)
 			ctx.setFillStyle(item.itemStyle.color)
 			data.forEach(function (i, index) {
-				let point = utils.dataTogrid(i)
+				if (i < dataLength) {
+					let point = utils.dataTogrid(i)
 				// ctx.beginPath()
 				let isHight 
 				if (index === options.xAxis[0].highlightIndex) {
@@ -131,6 +142,8 @@ export default {
 				ctx.stroke()
 				ctx.setStrokeStyle(item.itemStyle.color)
 				ctx.setFillStyle(item.itemStyle.color)
+				}
+				
 			})
 		}
 	},

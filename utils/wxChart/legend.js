@@ -17,17 +17,20 @@ export default {
 			let x = legend.left + 2
 			let r = options.grid[0].width - legend.right - 2
 			let y = legend.top
+			let dataLength = dataLegend.length > options.dataZoom[0].endValue ? options.dataZoom[0].endValue : dataLegend.length
 			dataLegend.map((item, index) => {
-				let textWidth = utils.measureText(item, 12)
-				let single = dataLegend.length % 2
-				if (legend.position === 'top') {
-					if (legend.align === 'left') {
-						this._drawUnit(ctx, x, y, item, 6)
-						x += (textWidth + 4 + 6 + 12)
-					} else if (legend.align === 'right') {
-						textWidth = utils.measureText(dataLegend[dataLegend.length - 1 - index], 12)
-						r = r - (textWidth + 4 + 6 + 12)
-						this._drawUnit(ctx, r, y, dataLegend[dataLegend.length - 1 - index], 6)
+				if (index < dataLength) {
+					let textWidth = utils.measureText(item, 12)
+					let single = dataLegend.length % 2
+					if (legend.position === 'top') {
+						if (legend.align === 'left') {
+							this._drawUnit(ctx, x, y, item, 6)
+							x += (textWidth + 4 + 6 + 12)
+						} else if (legend.align === 'right') {
+							textWidth = utils.measureText(dataLegend[dataLegend.length - 1 - index], 12)
+							r = r - (textWidth + 4 + 6 + 12)
+							this._drawUnit(ctx, r, y, dataLegend[dataLegend.length - 1 - index], 6)
+						}
 					}
 				}
 			})
